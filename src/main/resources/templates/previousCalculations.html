@@ -51,14 +51,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th style="width: 100px;">날짜</th>
+                <th style="width: 150px;">날짜</th>
                 <th>내역</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="board : ${boards}">
-                <td style="width: 100px;" th:text="${board.id}">번호</td>
-                <td>제목</td>
+                <td style="width: 100px;" th:text="${board.id}">2023-01-02</td>
+                <td>총 인원 5명이고, 계산 금액은 50,000원 입니다.</td>
             </tr>
             </tbody>
         </table>
