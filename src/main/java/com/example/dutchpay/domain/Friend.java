@@ -1,5 +1,7 @@
 package com.example.dutchpay.domain;
 
+import com.example.dutchpay.dto.FriendSaveDto;
+import com.example.dutchpay.dto.FriendSelectSaveDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,11 +13,16 @@ import javax.persistence.*;
 public class Friend {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "friend_id")
+    @Getter
     public Long id;
 
-    @Setter
-    @Column(nullable = false, length = 50) public String name;
-    @Setter @Column(nullable = false, length = 30) public String phoneNum;
+    @Setter @Getter
+    @Column(nullable = false, length = 50)
+    public String name;
+
+    @Setter @Getter
+    @Column(length = 30)
+    public String phoneNum;
 
     @ManyToOne
     @JoinColumn(name = "userAccount_id")
@@ -46,5 +53,9 @@ public class Friend {
 
     static public Friend of(String name, String phoneNum, UserAccount userAccount) {
         return new Friend(name, phoneNum, userAccount);
+    }
+
+    public FriendSelectSaveDto toFriendSelectSaveDto(Friend friend) {
+        return new FriendSelectSaveDto(friend.getId(), friend.getName(), friend.getPhoneNum());
     }
 }
