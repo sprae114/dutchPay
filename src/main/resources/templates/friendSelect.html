@@ -23,6 +23,7 @@
     </style>
 
 </head>
+
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -39,48 +40,43 @@
 <div style="height: 60px"></div>
 
 <div class="py-5 text-center">
-    <h2>술값 포함 O</h2>
+    <h2>친구 선택하기</h2>
 </div>
 
 <!--테이블 만들기-->
-<form action="totalcalculrate.html"
-      th:action="@{/dutch/dutchPayList/alcohol}"
-      th:object="${form}"
-      method="post">
-
-    <div class="container" style="width: 900px;">
+<form action="/dutchPayList" th:action ="@{/dutch/friend}" method="post">
+    <div class="container" style="width: 500px;">
         <table class="table" >
             <thead>
             <tr>
-                <td> 이름 </td>
-                <td> 금액 </td>
-                <td> 참석 여부 </td>
+                <th scope="col"> 이름 </th>
+                <th scope="col"> 친구 선택 </th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each = "dutchpay, dutchpayStat : *{dutchpays}">
-                <td><input class="form-control" type="text"
-                           th:field="*{dutchpays[__${dutchpayStat.index}__].name}" required disabled/>
-                    <input type="hidden" th:field="*{dutchpays[__${dutchpayStat.index}__].name}">
+            <tr th:each ="friendSelectSaveDto, friendSelectSaveDtoStus : ${friendList}" >
+                <td th:text="${friendSelectSaveDto.name}">홍길동</td>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                               th:name="'selectedfreind'" th:value="${friendSelectSaveDtoStus.index}"
+                               th:checked="true"/>
+                    </div>
                 </td>
-                <td> <input class="form-control" type="text"
-                            th:field="*{dutchpays[__${dutchpayStat.index}__].money}" required/> </td>
-                <td> <input class="form-check-input" type="checkbox"
-                            th:field="*{dutchpays[__${dutchpayStat.index}__].isPaid}"
-                            th:checked="true"/> </td>
             </tr>
             </tbody>
         </table>
 
         <div class="container d-flex justify-content-center">
             <div class="btn-group"  style="width: 300px"  role="group" aria-label="Basic example">
-                <button type="submit" class="btn btn-outline-success btn-rounded" data-mdb-ripple-color="dark">
-                    추가하기</button>
-                <button type="button" class="btn btn-outline-secondary btn-rounded" data-mdb-ripple-color="dark"
-                        onclick="location.href='totalcalculrate.html'"
-                        th:onclick="|location.href='@{/dutch/dutchPayList}'|">
-                    취소하기</button>
+                <button type="submit" class="btn btn-outline-success btn-rounded"
+                        data-mdb-ripple-color="dark">더치페이</button>
+
+                <button type="button" class="btn btn-outline-secondary btn-rounded"
+                        onclick="location.href='friendSelect.html'"
+                        th:onclick="|location.href='@{/dutch}'|"
+                        data-mdb-ripple-color="dark">메인으로</button>
             </div>
         </div>
     </div>

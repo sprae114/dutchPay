@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
 
@@ -52,9 +52,11 @@
         <div class="btn-group" style="width: 500px">
             <button type="button" class="btn btn-primary btn-rounded p-2"
                     onclick="location.href='calculaterDetail.html'"
+                    th:onclick="|location.href='@{/dutch/dutchPayList/alcohol}'|"
                     data-mdb-ripple-color="dark">술값 포함 O 추가</button>
             <button type="button" class="btn btn-danger btn-rounded p-2"
                     onclick="location.href='calculraterNoAlcoholDetail.html'"
+                    th:onclick="|location.href='@{/dutch/dutchPayList/noAlcohol}'|"
                     data-mdb-ripple-color="dark">술값 포함 X 추가</button>
         </div>
     </div>
@@ -71,9 +73,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="board : ${boards}">
-                <td th:text="${board.id}">1</td>
-                <td th:text="${board.userId}">50,000</td>
+            <tr th:each="dutchPay, dutchPayStat : ${dutchList}">
+                <td th:text="${dutchPayStat.count}">1</td>
+                <td th:text="${dutchPay}">50,000</td>
                 <td><button type="button" class="btn btn-outline-danger">삭제</button></td>
             </tr>
             </tbody>
@@ -86,12 +88,15 @@
     <div class="btn-group"  style="width: 500px"  role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-success btn-rounded "
                 onclick="location.href='calculraterResult.html'"
+                th:onclick="|location.href='@{/dutch/dutchResult}'|"
                 data-mdb-ripple-color="dark">계산하기</button>
         <button type="button" class="btn btn-outline-secondary btn-rounded"
                 onclick="location.href='../dutchHome.html'"
+                th:onclick="|location.href='@{/dutch}'|"
                 data-mdb-ripple-color="dark">메인으로</button>
         <button type="button" class="btn btn-outline-primary btn-rounded"
                 onclick="location.href='totalcalculrate.html'"
+                th:onclick="|location.href='@{/dutch/dutchPayListClear}'|"
                 data-mdb-ripple-color="dark">다시하기</button>
     </div>
 </div>
