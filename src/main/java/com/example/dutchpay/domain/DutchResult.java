@@ -20,7 +20,7 @@ public class DutchResult {
     @Column(name = "dutchResult_id")
     public Long id;
 
-    @Column(length=1000)
+    @Column(length=1000) @Getter
     @Setter public String result;
 
     @CreatedDate

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
 
@@ -41,69 +41,51 @@
 <div class="py-5 text-center">
     <h2>술값 포함 X 추가</h2>
 </div>
-
 <!--테이블 만들기-->
-<form action="totalcalculrate.html" th:action method="post">
-    <div class="container" style="width: 900px">
+<form action="totalcalculrate.html"
+      th:action="@{/dutch/dutchPayList/noAlcohol}"
+      th:object="${form}"
+      method="post">
+
+    <div class="container" style="width: 900px;">
         <table class="table" >
             <thead>
             <tr>
-                <th scope="col"> 이름 </th>
-                <th scope="col" > 금액 </th>
-                <th scope="col"> 참석 여부 </th>
-                <th scope="col"> 술값 제외 </th>
+                <td> 이름 </td>
+                <td> 안주 금액 </td>
+                <td> 술값 금액 </td>
+                <td> 참석 </td>
+                <td> 술값제외 </td>
             </tr>
             </thead>
 
             <tbody>
-            <tr >
-                <td>홍길동</td>
-                <th scope="row" >
-                    <div class="form-outline" >
-                        <input type="text" id="form1" class="form-control"  size=4 placeholder="0"/>
-                    </div>
-                </th>
-                <th scope="row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="seat1" />
-                    </div>
-                </th>
-                <th scope="row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="drunk1" />
-                    </div>
-                </th>
-            </tr>
-
-            <tr>
-                <td>김춘향</td>
-                <th scope="row" >
-                    <div class="form-outline" >
-                        <input type="text" id="form2" class="form-control" size=4 placeholder="0"/>
-                    </div>
-                </th>
-                <th scope="row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="seat2" />
-                    </div>
-                </th>
-                <th scope="row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="drunk2" />
-                    </div>
-                </th>
+            <tr th:each = "dutchpayAlchol, dutchpayStat : *{dutchpaysAlchol}">
+                <td><input class="form-control" type="text"
+                           th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].name}" required disabled/>
+                    <input type="hidden" th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].name}">
+                </td>
+                <td> <input class="form-control" type="text"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].money}" required/> </td>
+                <td> <input class="form-control" type="text"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].alcholMoney}" required/> </td>
+                <td> <input class="form-check-input" type="checkbox"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].isPaid}"
+                            th:checked="true"/> </td>
+                <td> <input class="form-check-input" type="checkbox" th:checked="true"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].isAlchol}" /> </td>
             </tr>
             </tbody>
         </table>
 
         <div class="container d-flex justify-content-center">
             <div class="btn-group"  style="width: 300px"  role="group" aria-label="Basic example">
-                <button type="submit" class="btn btn-outline-success btn-rounded"
+                <button type="submit" class="btn btn-outline-success btn-rounded" data-mdb-ripple-color="dark">
+                    추가하기</button>
+                <button type="button" class="btn btn-outline-secondary btn-rounded" data-mdb-ripple-color="dark"
                         onclick="location.href='totalcalculrate.html'"
-                        data-mdb-ripple-color="dark">추가하기</button>
-                <button type="button" class="btn btn-outline-secondary btn-rounded"
-                        onclick="location.href='totalcalculrate.html'"
-                        data-mdb-ripple-color="dark">취소하기</button>
+                        th:onclick="|location.href='@{/dutch/dutchPayList}'|">
+                    취소하기</button>
             </div>
         </div>
     </div>

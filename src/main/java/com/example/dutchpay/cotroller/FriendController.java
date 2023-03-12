@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.dutchpay.cotroller.DutchPayController.dutchinit;
 import static com.example.dutchpay.service.FriendService.*;
 
 @Controller
@@ -61,6 +62,8 @@ public class FriendController {
     @PostMapping("/dutch/friend")
     public String dutchFriendSelectSave(@RequestParam("selectedfreind") List<Integer> selectedfreind) {
         friendService.addFriendSelectListAfter(selectedfreind);
+        dutchinit();
+
         return "redirect:/" + "dutch/dutchPayList";
     }
 }
