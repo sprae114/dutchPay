@@ -42,7 +42,6 @@ public class DutchPayController {
 
     @GetMapping("/dutchPayList")
     public String dutchResult(Model model) {
-        System.out.println(">> dutchpayDb " + dutchpayDb);
         model.addAttribute("dutchList", dutchpayMain);
 
         return "cal/totalcalculrate";
@@ -106,10 +105,14 @@ public class DutchPayController {
         List<String> dutchPayResult = minTransfers(dutchpayTotal,
                 friendSelectListAfter.stream().map(FriendSelectSaveDto::getName).collect(Collectors.toList()));
 
-        String s = printDutchPay(totalMoney, dutchPayResult);
-
-        model.addAttribute("result", s);
+        model.addAttribute("result", printDutchPay(totalMoney, dutchPayResult));
         return "cal/calculraterResult";
+    }
+
+    @PostMapping("/dutchResult")
+    public String saveDutchResult(@ModelAttribute String result) {
+
+        return "redirect:/dutch";
     }
 
     static public void dutchinit() {
