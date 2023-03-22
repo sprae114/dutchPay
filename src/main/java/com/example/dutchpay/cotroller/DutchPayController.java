@@ -8,10 +8,7 @@ import com.example.dutchpay.service.InMemoryDutchPayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
@@ -43,9 +40,18 @@ public class DutchPayController {
     @GetMapping("/dutchPayList")
     public String dutchResult(Model model) {
         model.addAttribute("dutchList", dutchpayMain);
-
+        System.out.println(dutchpayDb);
         return "cal/totalcalculrate";
     }
+
+    @PostMapping("/dutchPayList/{id}")
+    public String dutchResultDelete(@PathVariable int id) {
+        dutchpayDb.remove(id);
+        dutchpayMain.remove(id);
+
+        return "redirect:/dutch/dutchPayList";
+    }
+
 
     @GetMapping("/dutchPayListClear")
     public String dutchClear() {

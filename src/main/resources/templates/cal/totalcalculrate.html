@@ -76,7 +76,11 @@
             <tr th:each="dutchPay, dutchPayStat : ${dutchList}">
                 <td th:text="${dutchPayStat.count}">1</td>
                 <td th:text="${dutchPay}">50,000</td>
-                <td><button type="button" class="btn btn-outline-danger">삭제</button></td>
+                <td>
+                    <form method="POST" th:action="@{/dutch/dutchPayList/{id}(id=${dutchPayStat.index})}">
+                        <button type="submit" class="btn btn-outline-danger">삭제</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
