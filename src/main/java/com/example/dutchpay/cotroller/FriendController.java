@@ -3,6 +3,7 @@ package com.example.dutchpay.cotroller;
 import com.example.dutchpay.domain.Friend;
 import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.dto.FriendSelectSaveDto;
+import com.example.dutchpay.service.DutchResultService;
 import com.example.dutchpay.service.FriendRepository;
 import com.example.dutchpay.service.FriendService;
 import com.example.dutchpay.service.UserAccountRepository;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.dutchpay.cotroller.DutchPayController.dutchinit;
 import static com.example.dutchpay.service.FriendService.*;
 
 @Controller
@@ -22,14 +22,17 @@ public class FriendController {
     private final FriendRepository friendRepository;
     private final FriendService friendService;
     private final UserAccountRepository userAccountRepository;
+    private final DutchResultService dutchResultService;
 
     @Autowired
     public FriendController(FriendRepository friendRepository,
                             FriendService friendService,
-                            UserAccountRepository userAccountRepository) {
+                            UserAccountRepository userAccountRepository
+                            , DutchResultService dutchResultService) {
         this.friendRepository = friendRepository;
         this.friendService = friendService;
         this.userAccountRepository = userAccountRepository;
+        this.dutchResultService = dutchResultService;
     }
 
     @GetMapping("/friend")
@@ -62,7 +65,7 @@ public class FriendController {
     @PostMapping("/dutch/friend")
     public String dutchFriendSelectSave(@RequestParam("selectedfreind") List<Integer> selectedfreind) {
         friendService.addFriendSelectListAfter(selectedfreind);
-        dutchinit();
+        dutchResultService.dutchinit();
 
         return "redirect:/" + "dutch/dutchPayList";
     }
