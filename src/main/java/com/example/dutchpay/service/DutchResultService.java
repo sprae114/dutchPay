@@ -15,11 +15,6 @@ public class DutchResultService {
         this.dutchResultRepository = dutchResultRepository;
     }
 
-    public void addDutchResult(String dutchResult){
-        UserAccount userAccount = userAccountRepository.findById(1L).orElse(null);
-        dutchResultRepository.save(new DutchResult(dutchResult, userAccount));
-    }
-
     public List<DutchResult> getDutchResult(){
         return dutchResultRepository.findAllByUserAccountId(1L);
     }

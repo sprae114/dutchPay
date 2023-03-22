@@ -8,7 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @ToString
@@ -20,13 +21,14 @@ public class DutchResult {
     @Column(name = "dutchResult_id")
     public Long id;
 
-    @Column(length=1000) @Getter
-    @Setter public String result;
+    @Column(length=1500) @Getter @Setter
+    public String result;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDateTime createdAt;
+    @Getter
+    LocalDate createdAt;
 
     @ManyToOne
     @JoinColumn(name = "userAccount_id")
@@ -53,7 +55,7 @@ public class DutchResult {
         this.userAccount = userAccount;
     }
 
-    public DutchResult(String result, LocalDateTime createdAt, UserAccount userAccount) {
+    public DutchResult(String result, LocalDate createdAt, UserAccount userAccount) {
         this.result = result;
         this.createdAt = createdAt;
         this.userAccount = userAccount;

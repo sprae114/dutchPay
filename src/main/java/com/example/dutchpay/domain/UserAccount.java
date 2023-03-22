@@ -8,12 +8,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
 @Entity
 public class UserAccount {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userAccount_id") @Getter
+    @Column(name = "userAccount_id")
+    @Getter
     public Long id;
 
     @Setter @Column(nullable = false, length = 50) public String name;

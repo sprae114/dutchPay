@@ -56,9 +56,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="board : ${boards}">
-                <td style="width: 100px;" th:text="${board.id}">2023-01-02</td>
-                <td>총 인원 5명이고, 계산 금액은 50,000원 입니다.</td>
+            <tr th:each="dutch : ${dutchResultList}">
+<!--                <td style="width: 100px;" th:text="${#dates.format(dutch.getCreatedAt(), 'yyyy-MM-dd')}">2023-01-02</td>-->
+                <td style="width: 100px;" th:text="${dutch.getCreatedAt()}">2023-01-02</td>
+                <td th:utext="${dutch.getResult()}">총 인원 5명이고, 계산 금액은 50,000원 입니다.</td>
             </tr>
             </tbody>
         </table>
