@@ -30,7 +30,8 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb- mb-md-0" style="font-size: 25px">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="#"
+                   th:href="@{/dutch}">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">logout</a>
@@ -69,8 +70,9 @@
 </div>
 <div class="container d-flex justify-content-center">
     <button type="button" class="btn btn-outline-secondary btn-rounded"
+            data-mdb-ripple-color="dark"
             onclick="location.href='dutchHome.html'"
-            data-mdb-ripple-color="dark">돌아가기</button>
+            th:onclick="|location.href='@{/dutch}'|">돌아가기</button>
 </div>
 
 

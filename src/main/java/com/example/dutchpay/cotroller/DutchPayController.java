@@ -39,7 +39,6 @@ public class DutchPayController {
     @GetMapping("/dutchPayList")
     public String dutchResult(Model model) {
         model.addAttribute("dutchList", dutchpayMain);
-        System.out.println(dutchpayDb);
         return "cal/totalcalculrate";
     }
 
