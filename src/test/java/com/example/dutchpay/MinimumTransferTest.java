@@ -3,7 +3,6 @@ package com.example.dutchpay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class MinimumTransferTest {
@@ -17,34 +16,39 @@ public class MinimumTransferTest {
         String[] names = {"A", "B", "C", "D"};
 
         // when
+        System.out.println(">> 최소이체를 고려하지 않은 기본 구현");
         long startTime1 = System.currentTimeMillis();
         List<String> list1 = basicMinTransfers(balances.clone(), names);
         long finishTime1 = System.currentTimeMillis();
 
         printResult(startTime1, list1, finishTime1);
 
-        long startTime2 = System.currentTimeMillis();
-        List<String> list2 = sameMoneyAfterBigMoneyMinTransfers(balances.clone(), names);
-        long finishTime2 = System.currentTimeMillis();
-        printResult(startTime2, list2, finishTime2);
-
-        long startTime4 = System.currentTimeMillis();
-        List<String> list4 = sameMoneyAfterBigMoneyMinTransfers2(balances.clone(), names);
-        long finishTime4 = System.currentTimeMillis();
-        printResult(startTime4, list4, finishTime4);
-
-
-        long startTime5 = System.currentTimeMillis();
-        List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
-        long finishTime5 = System.currentTimeMillis();
-        printResult(startTime5, list5, finishTime5);
-
+        System.out.println(">> dfs를 이용해 최소이체값 찾기");
         long startTime3 = System.currentTimeMillis();
         int i = dfsMinTransfers(balances);
         long finishTime3 = System.currentTimeMillis();
 
         System.out.println("실행 시간 : " + (finishTime3 - startTime3) + "ms");
         System.out.println("이체 횟수 : " + i);
+        System.out.println("---------------");
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체");
+        long startTime2 = System.currentTimeMillis();
+        List<String> list2 = sameMoneyAfterBigMoneyMinTransfers(balances.clone(), names);
+        long finishTime2 = System.currentTimeMillis();
+        printResult(startTime2, list2, finishTime2);
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 그 당시에 가장 큰 금액을 우선순위 두기");
+        long startTime4 = System.currentTimeMillis();
+        List<String> list4 = sameMoneyAfterBigMoneyMinTransfers2(balances.clone(), names);
+        long finishTime4 = System.currentTimeMillis();
+        printResult(startTime4, list4, finishTime4);
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 처리 이체 같은 금액 우선순위 두기");
+        long startTime5 = System.currentTimeMillis();
+        List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
+        long finishTime5 = System.currentTimeMillis();
+        printResult(startTime5, list5, finishTime5);
 
         // then
     }
@@ -57,38 +61,39 @@ public class MinimumTransferTest {
         String[] names = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
         // when
+        System.out.println(">> 최소이체를 고려하지 않은 기본 구현");
         long startTime1 = System.currentTimeMillis();
         List<String> list1 = basicMinTransfers(balances.clone(), names);
         long finishTime1 = System.currentTimeMillis();
 
         printResult(startTime1, list1, finishTime1);
 
-        long startTime2 = System.currentTimeMillis();
-        List<String> list2 = sameMoneyAfterBigMoneyMinTransfers(balances.clone(), names);
-        long finishTime2 = System.currentTimeMillis();
-
-        printResult(startTime2, list2, finishTime2);
-
-        long startTime4 = System.currentTimeMillis();
-        List<String> list4 = sameMoneyAfterBigMoneyMinTransfers2(balances.clone(), names);
-        long finishTime4 = System.currentTimeMillis();
-
-        printResult(startTime4, list4, finishTime4);
-
-        long startTime5 = System.currentTimeMillis();
-        List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
-        long finishTime5 = System.currentTimeMillis();
-
-        printResult(startTime5, list5, finishTime5);
-
+        System.out.println(">> dfs를 이용해 최소이체값 찾기");
         long startTime3 = System.currentTimeMillis();
         int i = dfsMinTransfers(balances);
         long finishTime3 = System.currentTimeMillis();
 
         System.out.println("실행 시간 : " + (finishTime3 - startTime3) + "ms");
         System.out.println("이체 횟수 : " + i);
+        System.out.println("---------------");
 
-        // then
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체");
+        long startTime2 = System.currentTimeMillis();
+        List<String> list2 = sameMoneyAfterBigMoneyMinTransfers(balances.clone(), names);
+        long finishTime2 = System.currentTimeMillis();
+        printResult(startTime2, list2, finishTime2);
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 그 당시에 가장 큰 금액을 우선순위 두기");
+        long startTime4 = System.currentTimeMillis();
+        List<String> list4 = sameMoneyAfterBigMoneyMinTransfers2(balances.clone(), names);
+        long finishTime4 = System.currentTimeMillis();
+        printResult(startTime4, list4, finishTime4);
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 처리 이체 같은 금액 우선순위 두기");
+        long startTime5 = System.currentTimeMillis();
+        List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
+        long finishTime5 = System.currentTimeMillis();
+        printResult(startTime5, list5, finishTime5);
     }
 
 
@@ -100,36 +105,39 @@ public class MinimumTransferTest {
         String[] names = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"};
 
         // when
+        System.out.println(">> 최소이체를 고려하지 않은 기본 구현");
         long startTime1 = System.currentTimeMillis();
         List<String> list1 = basicMinTransfers(balances.clone(), names);
         long finishTime1 = System.currentTimeMillis();
 
         printResult(startTime1, list1, finishTime1);
 
-        long startTime2 = System.currentTimeMillis();
-        List<String> list2 = sameMoneyAfterBigMoneyMinTransfers(balances.clone(), names);
-        long finishTime2 = System.currentTimeMillis();
-
-        printResult(startTime2, list2, finishTime2);
-
-        long startTime4 = System.currentTimeMillis();
-        List<String> list4 = sameMoneyAfterBigMoneyMinTransfers2(balances.clone(), names);
-        long finishTime4 = System.currentTimeMillis();
-
-        printResult(startTime4, list4, finishTime4);
-
-        long startTime5 = System.currentTimeMillis();
-        List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
-        long finishTime5 = System.currentTimeMillis();
-
-        printResult(startTime5, list5, finishTime5);
-
+        System.out.println(">> dfs를 이용해 최소이체값 찾기");
         long startTime3 = System.currentTimeMillis();
         int i = dfsMinTransfers(balances);
         long finishTime3 = System.currentTimeMillis();
 
         System.out.println("실행 시간 : " + (finishTime3 - startTime3) + "ms");
         System.out.println("이체 횟수 : " + i);
+        System.out.println("---------------");
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체");
+        long startTime2 = System.currentTimeMillis();
+        List<String> list2 = sameMoneyAfterBigMoneyMinTransfers(balances.clone(), names);
+        long finishTime2 = System.currentTimeMillis();
+        printResult(startTime2, list2, finishTime2);
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 그 당시에 가장 큰 금액을 우선순위 두기");
+        long startTime4 = System.currentTimeMillis();
+        List<String> list4 = sameMoneyAfterBigMoneyMinTransfers2(balances.clone(), names);
+        long finishTime4 = System.currentTimeMillis();
+        printResult(startTime4, list4, finishTime4);
+
+        System.out.println(">> 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 처리 이체 같은 금액 우선순위 두기");
+        long startTime5 = System.currentTimeMillis();
+        List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
+        long finishTime5 = System.currentTimeMillis();
+        printResult(startTime5, list5, finishTime5);
     }
 
 
@@ -141,7 +149,7 @@ public class MinimumTransferTest {
     }
 
     /*
-     * todo : 음수 잔액이 가장 작은 계좌와 양수 잔액으로 이체
+     * 음수 잔액이 가장 작은 계좌와 양수 잔액으로 이체
      */
 
     private static List<String> basicMinTransfers(Long[] balances, String[] names) {
@@ -182,7 +190,7 @@ public class MinimumTransferTest {
     }
 
     /*
-     * todo : 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체
+     * 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체
      */
 
     public static List<String> sameMoneyAfterBigMoneyMinTransfers(Long[] balances, String[] names) {
@@ -239,7 +247,7 @@ public class MinimumTransferTest {
     }
 
     /*
-     * todo : 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체하는데 같은 금액 우선순위 두기
+     * 절대값이 같은 돈은 먼저 이체한후 남은 돈을 이체하는데 같은 금액 우선순위 두기
      */
 
     public static List<String> sameMoneyAfterBigMoneyMinTransfers2(Long[] balances, String[] names) {
@@ -303,7 +311,7 @@ public class MinimumTransferTest {
     }
 
     /*
-     * todo : 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 이체 같은 금액 우선순위 두기
+     * 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 이체 같은 금액 우선순위 두기
      */
 
     public static List<String> sameMoneyAfterBigMoneyMinTransfers3(Long[] balances, String[] names) {
@@ -378,7 +386,7 @@ public class MinimumTransferTest {
     }
 
     /*
-     * todo : dfs로 풀어보기
+     * dfs로 풀어보기
      */
 
     // minTransfers 메소드는 transactions 배열을 입력으로 받습니다. 이 배열은 각 사람의 채무/채권 상태를 나타냄.
