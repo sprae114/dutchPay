@@ -11,15 +11,13 @@ import java.util.List;
 @Entity
 public class UserAccount {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Column(name = "userAccount_id")
     @Getter
     public Long id;
 
-    @Setter @Column(nullable = false, length = 50) public String name;
-    @Setter @Column(nullable = false, length = 50) public String email;
-    @Setter @Column(nullable = false, length = 50) public String password;
-
+    @Getter @Column(nullable = false, length = 50) public String name;
+    @Getter @Column(nullable = false, length = 50) public String email;
 
     @OneToMany(mappedBy = "userAccount")
     @Getter
@@ -32,7 +30,6 @@ public class UserAccount {
             dutchResult.setUserAccount(this);
         }
     }
-
 
     @OneToMany(mappedBy = "userAccount")
     @Getter
@@ -50,26 +47,13 @@ public class UserAccount {
     public UserAccount() {
     }
 
-    public UserAccount(String name, String email, String password) {
+    public UserAccount(Long id, String name, String email) {
+        this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
-    public UserAccount(String name,
-                       List<DutchResult> dutchResults,
-                       List<Friend> friends,
-                       String email,
-                       String password) {
-
-        this.name = name;
-        this.dutchResults = dutchResults;
-        this.friends = friends;
-        this.email = email;
-        this.password = password;
-    }
-
-    static public UserAccount of (String name, String email, String password) {
-        return new UserAccount(name, email, password);
+    static public UserAccount of (Long id,String name, String email) {
+        return new UserAccount(id, name, email);
     }
 }

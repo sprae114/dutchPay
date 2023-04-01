@@ -42,6 +42,7 @@ public class FriendController {
 
     @PostMapping("/friend")
     public String dutchAddFriend(@ModelAttribute("newFriend") FriendSaveDto friendSaveDto) {
+        // todo: 추후에, Id 변경
         friendService.addFriend(friendSaveDto.toEntity(userAccountRepository.findById(1L).orElse(null)));
         return "redirect:/" + "friend";
     }
@@ -54,6 +55,7 @@ public class FriendController {
     
     @GetMapping("/dutch/friend")
     public String dutchFriendSelect(Model model) {
+        // todo: 추후에, Id 변경
         friendService.addFriendSelectListBefore(friendRepository.findAllByUserAccountId(1L));
         model.addAttribute("friendList", friendSelectListBefore);
         return "friendSelect";
