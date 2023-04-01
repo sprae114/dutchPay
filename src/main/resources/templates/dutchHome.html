@@ -26,6 +26,14 @@
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
+        #my-div {
+            color: white;
+            background-color: #323539;
+            position: fixed;
+            top: 4px;
+            right: 10px;
+            padding: 10px;
+        }
     </style>
 
     <!-- Custom styles for this template -->
@@ -34,6 +42,7 @@
 
 </head>
 <body>
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb- mb-md-0" style="font-size: 25px">
@@ -41,9 +50,9 @@
                 <a class="nav-link active" aria-current="page" href="#"
                    th:href="@{/dutch}">Home</a>
             </li>
-            <li class="nav-item">
-                <form class="nav-link" th:action="@{/logout}" method="post">
-                    <input type="submit" value="Logout">
+            <li class="nav-item ml-auto">
+                <form th:action="@{/logout}" method="post">
+                    <input id="my-div" type="submit" value="Logout">
                 </form>
             </li>
         </ul>

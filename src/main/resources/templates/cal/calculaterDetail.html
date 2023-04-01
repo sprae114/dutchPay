@@ -20,6 +20,14 @@
         .btn{
             font-size: 20px;
         }
+        #my-div {
+            color: white;
+            background-color: #323539;
+            position: fixed;
+            top: 4px;
+            right: 10px;
+            padding: 10px;
+        }
     </style>
 
 </head>
@@ -29,14 +37,17 @@
         <ul class="navbar-nav me-auto mb- mb-md-0" style="font-size: 25px">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#"
-                th:href="@{/dutch}">Home</a>
+                   th:href="@{/dutch}">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">logout</a>
+            <li class="nav-item ml-auto">
+                <form th:action="@{/logout}" method="post">
+                    <input id="my-div" type="submit" value="Logout">
+                </form>
             </li>
         </ul>
     </div>
 </nav>
+
 <div style="height: 60px"></div>
 
 <div class="py-5 text-center">

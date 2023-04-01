@@ -45,7 +45,7 @@ public class homeController {
 
         List<DutchResult> dutchResultList = dutchResultService.getDutchResult(principal);
         model.addAttribute("dutchResultList", dutchResultList);
-        
+
         return "previousCalculations";
     }
 }
