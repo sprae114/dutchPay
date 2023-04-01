@@ -5,6 +5,8 @@ import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.*;
 import com.example.dutchpay.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,7 @@ public class DutchPayController {
     private final DutchPayService dutchPayService;
     private final DutchResultRepository dutchResultRepository;
     private final UserAccountRepository userAccountRepository;
+
 
     public static List<Long> dutchpayMain = new ArrayList<>();
 
@@ -119,14 +122,15 @@ public class DutchPayController {
 
 
     @PostMapping("/recordDutchResult")
-    public String recordDutchResult(@RequestParam String recordDutch) {
-        System.out.println(">> recordDutchResult " + recordDutch);
-        UserAccount userAccount = userAccountRepository.findById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + 1L));
+    public String recordDutchResult(@AuthenticationPrincipal OAuth2User principal,
+                                    @RequestParam String recordDutch) {
+
+        UserAccount userAccount = userAccountRepository
+                .findById((Long) principal.getAttribute("id"))
+                .orElseThrow(() ->
+                new IllegalArgumentException("해당 사용자가 없습니다."));
 
         dutchResultRepository.save(new DutchResult(recordDutch, userAccount));
-
-        //todo : 로그인 만들고 로그인한 사용자의 id를 가져와서 저장
 
         return "redirect:/dutch";
     }

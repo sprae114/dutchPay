@@ -1,11 +1,14 @@
 package com.example.dutchpay.cotroller;
 
+import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.service.DutchPayService;
 import com.example.dutchpay.service.FriendRepository;
 import com.example.dutchpay.service.FriendService;
 import com.example.dutchpay.service.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,31 +36,45 @@ public class FriendController {
     }
 
     @GetMapping("/friend")
-    public String friendList(Model model) {
-        // todo: 추후에, userAccount.getId() 변경
-        model.addAttribute("friendList", friendRepository.findAllByUserAccountId(1L));
+    public String friendList(@AuthenticationPrincipal OAuth2User principal,
+                             Model model) {
+
+        model.addAttribute("friendList", friendRepository
+                .findAllByUserAccountId((Long) principal.getAttribute("id")));
         model.addAttribute("newFriend", new FriendSaveDto());
+
         return "friend";
     }
 
     @PostMapping("/friend")
-    public String dutchAddFriend(@ModelAttribute("newFriend") FriendSaveDto friendSaveDto) {
-        // todo: 추후에, Id 변경
-        friendService.addFriend(friendSaveDto.toEntity(userAccountRepository.findById(1L).orElse(null)));
+    public String dutchAddFriend(@AuthenticationPrincipal OAuth2User principal,
+                                 @ModelAttribute("newFriend") FriendSaveDto friendSaveDto) {
+
+        UserAccount userAccount = userAccountRepository.findById((Long) principal.getAttribute("id")).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + principal.getAttribute("id"))
+        );
+
+        friendService.addFriend(friendSaveDto.toEntity(userAccount));
+
         return "redirect:/" + "friend";
     }
 
     @GetMapping("/friend/{id}")
     public String dutchDeleteFriend(@PathVariable Long id) {
+
         friendService.deleteFriend(id);
+
         return "redirect:/" + "friend";
     }
     
     @GetMapping("/dutch/friend")
-    public String dutchFriendSelect(Model model) {
-        // todo: 추후에, Id 변경
-        friendService.addFriendSelectListBefore(friendRepository.findAllByUserAccountId(1L));
+    public String dutchFriendSelect(@AuthenticationPrincipal OAuth2User principal,
+                                    Model model) {
+
+        friendService.addFriendSelectListBefore(friendRepository
+                .findAllByUserAccountId((Long) principal.getAttribute("id")));
         model.addAttribute("friendList", friendSelectListBefore);
+
         return "friendSelect";
     }
 

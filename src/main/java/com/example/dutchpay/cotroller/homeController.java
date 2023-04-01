@@ -40,9 +40,12 @@ public class homeController {
     }
 
     @GetMapping("/previousCalculations")
-    public String previousCalculations(Model model) {
-        List<DutchResult> dutchResultList = dutchResultService.getDutchResult();
+    public String previousCalculations(@AuthenticationPrincipal OAuth2User principal,
+                                       Model model) {
+
+        List<DutchResult> dutchResultList = dutchResultService.getDutchResult(principal);
         model.addAttribute("dutchResultList", dutchResultList);
+        
         return "previousCalculations";
     }
 }
