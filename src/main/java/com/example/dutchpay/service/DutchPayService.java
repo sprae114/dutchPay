@@ -28,6 +28,12 @@ public class DutchPayService {
     //최소이체로 이체하기
     public static List<String> minTransfers(List<Long> balances, List<String> names) {
         int n = balances.size();
+
+        //0일때 제외
+        if (n == 0) {
+            return new ArrayList<>();
+        }
+
         List<String> res = new ArrayList<>();
 
         //0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
@@ -109,6 +115,12 @@ public class DutchPayService {
     }
 
     private void sumDutchPayMoney() {
+
+        //0일때 제외
+        if (dutchpayDb.size() == 0) {
+            return;
+        }
+
         dutchpayTotal = dutchpayDb.get(0);
 
         for (int i = 1; i < dutchpayDb.size(); i++) {
