@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.example.dutchpay.service.DutchPayService.dutchpayTotal;
@@ -34,7 +35,11 @@ public class DutchPayController {
     public static List<Long> dutchpayMain = new ArrayList<>();
 
     @GetMapping
-    public String dutchHome() {
+    public String dutchHome(@AuthenticationPrincipal OAuth2User principal, Model model) {
+        Map<String, Object> properties = (Map<String, Object>) principal.getAttribute("properties");
+        String nickname = (String) properties.get("nickname");
+        model.addAttribute("name", nickname);
+
         return "dutchHome";
     }
 
