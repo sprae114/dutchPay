@@ -43,7 +43,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(500);
+                .hasSize(1000);
     }
 
     @DisplayName("userAccount select 테스트")
@@ -57,7 +57,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(600);
+                .hasSize(100);
     }
 
     @DisplayName("dutchResult select 테스트")
@@ -71,7 +71,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(200);
+                .hasSize(500);
     }
 
 
@@ -96,7 +96,7 @@ public class JpaRepositoryTest {
         long previousCount = userAccountRepository.count();
 
         // When
-        userAccountRepository.save(UserAccount.of("Lownsbrough", "mbownass3@xing.com", "tnwhgx71fud"));
+        userAccountRepository.save(UserAccount.of(101L, "john", "mbownass3@xing.com"));
 
         // Then
         Assertions.assertThat(userAccountRepository.count()).isEqualTo(previousCount+1);
