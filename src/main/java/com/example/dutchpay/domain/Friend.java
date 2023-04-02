@@ -1,12 +1,13 @@
 package com.example.dutchpay.domain;
 
-import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.dto.FriendSelectSaveDto;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @ToString
 @Entity
@@ -17,10 +18,12 @@ public class Friend {
     public Long id;
 
     @Setter @Getter
-    @Column(nullable = false, length = 50)
+    @NotBlank
+    @Column(length = 30)
     public String name;
 
     @Setter @Getter
+    @NotBlank
     @Column(length = 30)
     public String phoneNum;
 
