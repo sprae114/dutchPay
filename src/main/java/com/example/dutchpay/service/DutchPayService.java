@@ -67,8 +67,11 @@ public class DutchPayService {
                 }
             }
 
+            int count = 0;
+
             //큰 금액이 0이 될때까지 반복
             while (balances.get(maxIndex) != 0L) {
+                count += 1;
                 temp = true;
                 int minIndex = 0;
 
@@ -95,7 +98,7 @@ public class DutchPayService {
             }
 
             //종료조건
-            if (temp.equals(false)) {
+            if (temp.equals(false) || count > 500) {
                 break;
             }
         }
