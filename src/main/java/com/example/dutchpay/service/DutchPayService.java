@@ -29,82 +29,85 @@ public class DutchPayService {
     public static List<String> minTransfers(List<Long> balances, List<String> names) {
         int n = balances.size();
 
-        //0일때 제외
+        // 0일 때 제외
         if (n == 0) {
             return new ArrayList<>();
         }
 
         List<String> res = new ArrayList<>();
 
-        //0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
+        // 0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
+        List<Long> tempBalances = new ArrayList<>(balances);
         for (int i = 0; i < n; i++) {
-            if (balances.get(i) != 0) {
+            if (tempBalances.get(i) != 0L) {
                 for (int j = i + 1; j < n; j++) {
-                    if ((Math.abs(balances.get(i)) == Math.abs(balances.get(j))) && (balances.get(i) > 0)) {
-                        res.add(names.get(j) + " -> " + names.get(i) + "에게 보낼 금액은 : " + String.format("%,d", Math.abs(balances.get(i))) + "원 입니다.");
-                        balances.set(i, 0L);
-                        balances.set(j, 0L);
-                    }
-
-                    if ((Math.abs(balances.get(i)) == Math.abs(balances.get(j))) && (balances.get(j) > 0)) {
-                        res.add(names.get(i) + " -> " + names.get(j) + "에게 보낼 금액은 : " + String.format("%,d", Math.abs(balances.get(i))) + "원 입니다.");
-                        balances.set(i, 0L);
-                        balances.set(j, 0L);
+                    if (Math.abs(tempBalances.get(i)) == Math.abs(tempBalances.get(j))) {
+                        if (tempBalances.get(i) > 0) {
+                            res.add(names.get(j) + " -> " + names.get(i) + "에게 보낼 금액은 : " + String.format("%,d", Math.abs(tempBalances.get(i))) + "원 입니다.");
+                            tempBalances.set(i, 0L);
+                            tempBalances.set(j, 0L);
+                        } else if (tempBalances.get(j) > 0) {
+                            res.add(names.get(i) + " -> " + names.get(j) + "에게 보낼 금액은 : " + String.format("%,d", Math.abs(tempBalances.get(i))) + "원 입니다.");
+                            tempBalances.set(i, 0L);
+                            tempBalances.set(j, 0L);
+                        }
                     }
                 }
             }
         }
 
-
-        while (true) {
-            //가장 큰 금액 찾기
+        // 송금 거래 처리
+        int count = n;
+        while (count > 0) {
             int maxIndex = 0;
-            Boolean temp = false;
+            boolean found = false;
 
+            // 가장 큰 금액 찾기
             for (int i = 1; i < n; i++) {
-                if (balances.get(i) > balances.get(maxIndex)) {
+                if (tempBalances.get(i) > tempBalances.get(maxIndex)) {
                     maxIndex = i;
                 }
             }
 
-            int count = 0;
-
-            //큰 금액이 0이 될때까지 반복
-            while (balances.get(maxIndex) != 0L) {
-                count += 1;
-                temp = true;
+            // 큰 금액이 0이 될 때까지 반복
+            while (tempBalances.stream().filter(balance -> balance != 0).count() != 1) {
+                found = true;
                 int minIndex = 0;
 
+                // 최소 금액을 가지는 참가자 선택
                 for (int j = 1; j < n; j++) {
-                    if (balances.get(j) + balances.get(maxIndex) == 0) {
+                    if (tempBalances.get(j) + tempBalances.get(maxIndex) == 0) {
                         minIndex = j;
                         break;
                     }
 
-                    if (balances.get(j) < balances.get(minIndex)) {
+                    if (tempBalances.get(j) < tempBalances.get(minIndex)) {
                         minIndex = j;
                     }
                 }
 
-                if (balances.get(minIndex) == 0 && balances.get(maxIndex) == 0) {
+                if (tempBalances.get(minIndex) == 0 && tempBalances.get(maxIndex) == 0) {
                     break;
                 }
 
-                Long amount = Math.min(-balances.get(minIndex), balances.get(maxIndex));
+                // 송금 처리
+                Long amount = Math.min(-tempBalances.get(minIndex), tempBalances.get(maxIndex));
 
                 res.add(names.get(minIndex) + " -> " + names.get(maxIndex) + "에게 보낼 금액은 : " + String.format("%,d", amount) + "원 입니다.");
-                balances.set(minIndex, balances.get(minIndex) + amount);
-                balances.set(maxIndex, balances.get(maxIndex) - amount);
+                tempBalances.set(minIndex, tempBalances.get(minIndex) + amount);
+                tempBalances.set(maxIndex, tempBalances.get(maxIndex) - amount);
             }
 
-            //종료조건
-            if (temp.equals(false) || count > 500) {
+            if (!found) {
                 break;
             }
+
+            count--;
         }
 
         return res;
     }
+
 
     public String printDutchPay(String totalMoney, List<String> dutchPayResult){
         StringBuilder sb = new StringBuilder();

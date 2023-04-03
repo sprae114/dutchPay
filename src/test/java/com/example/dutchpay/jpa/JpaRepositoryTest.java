@@ -1,4 +1,4 @@
-package com.example.dutchpay;
+package com.example.dutchpay.jpa;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.Friend;
