@@ -1,13 +1,14 @@
 package com.example.dutchpay.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dutchpay.cotroller.DutchPayController.dutchpayMain;
 import static com.example.dutchpay.service.InMemoryDutchPayService.dutchpayDb;
-
+@Transactional
 @Service
 public class DutchPayService {
     public static List<Long> dutchpayTotal = new ArrayList<>();

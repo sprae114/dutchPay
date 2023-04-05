@@ -5,10 +5,12 @@ import com.example.dutchpay.dto.FriendSelectSaveDto;
 import com.example.dutchpay.repository.FriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service
 public class FriendService {
     public static ArrayList<FriendSelectSaveDto> friendSelectListBefore;

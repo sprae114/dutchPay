@@ -4,9 +4,11 @@ import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.repository.DutchResultRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class DutchResultService {
     public DutchResultRepository dutchResultRepository;
