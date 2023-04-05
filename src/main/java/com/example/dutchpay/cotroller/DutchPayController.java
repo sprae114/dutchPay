@@ -3,6 +3,8 @@ package com.example.dutchpay.cotroller;
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.*;
+import com.example.dutchpay.repository.DutchResultRepository;
+import com.example.dutchpay.repository.UserAccountRepository;
 import com.example.dutchpay.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -2,6 +2,7 @@ package com.example.dutchpay.service;
 
 import com.example.dutchpay.domain.Friend;
 import com.example.dutchpay.dto.FriendSelectSaveDto;
+import com.example.dutchpay.repository.FriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.dutchpay.service;
+package com.example.dutchpay.repository;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.UserAccount;
