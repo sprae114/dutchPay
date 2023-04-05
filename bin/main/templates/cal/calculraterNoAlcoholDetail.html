@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <meta name="theme-color" content="#712cf9">
+
+    <style>
+        tr{
+            height: 50px;
+            font-size: 24px;
+        }
+
+        td {
+            font-size: 20px;
+        }
+
+        .btn{
+            font-size: 20px;
+        }
+        #my-div {
+            color: white;
+            background-color: #323539;
+            position: fixed;
+            top: 4px;
+            right: 10px;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb- mb-md-0" style="font-size: 25px">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#"
+                   th:href="@{/dutch}">Home</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <form th:action="@{/logout}" method="post">
+                    <input id="my-div" type="submit" value="Logout">
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div style="height: 60px"></div>
+
+<div class="py-5 text-center">
+    <h2>술값 포함 X 추가</h2>
+</div>
+<!--테이블 만들기-->
+<form action="totalcalculrate.html"
+      th:action="@{/dutch/dutchPayList/noAlcohol}"
+      th:object="${form}"
+      method="post">
+
+    <div class="container" style="width: 900px;">
+        <table class="table" >
+            <thead>
+            <tr>
+                <td> 이름 </td>
+                <td> 안주 금액 </td>
+                <td> 술값 금액 </td>
+                <td> 참석 </td>
+                <td> 술값제외 </td>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each = "dutchpayAlchol, dutchpayStat : *{dutchpaysAlchol}">
+                <td><input class="form-control" type="text"
+                           th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].name}" required disabled/>
+                    <input type="hidden" th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].name}">
+                </td>
+                <td> <input class="form-control" type="text"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].money}" required/> </td>
+                <td> <input class="form-control" type="text"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].alcholMoney}" required/> </td>
+                <td> <input class="form-check-input" type="checkbox"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].isPaid}"
+                            th:checked="true"/> </td>
+                <td> <input class="form-check-input" type="checkbox" th:checked="true"
+                            th:field="*{dutchpaysAlchol[__${dutchpayStat.index}__].isAlchol}" /> </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="container d-flex justify-content-center">
+            <div class="btn-group"  style="width: 300px"  role="group" aria-label="Basic example">
+                <button type="submit" class="btn btn-outline-success btn-rounded" data-mdb-ripple-color="dark">
+                    추가하기</button>
+                <button type="button" class="btn btn-outline-secondary btn-rounded" data-mdb-ripple-color="dark"
+                        onclick="location.href='totalcalculrate.html'"
+                        th:onclick="|location.href='@{/dutch}'|">
+                    취소하기</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
