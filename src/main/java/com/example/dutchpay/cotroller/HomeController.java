@@ -1,7 +1,6 @@
 package com.example.dutchpay.cotroller;
 
 import com.example.dutchpay.domain.DutchResult;
-import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.service.DutchResultService;
 import com.example.dutchpay.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-public class homeController {
+public class HomeController {
 
     private final DutchResultService dutchResultService;
     private final UserAccountService userService;
 
     @Autowired
-    public homeController(DutchResultService dutchResultService, UserAccountService userService) {
+    public HomeController(DutchResultService dutchResultService, UserAccountService userService) {
         this.dutchResultService = dutchResultService;
         this.userService = userService;
     }
