@@ -25,6 +25,10 @@ public class FriendService {
     }
 
     public void addFriend(Friend friend) {
+        if (friend == null) {
+            throw new NullPointerException("친구가 존재하지 않습니다.");
+        }
+
         friendRepository.save(friend);
     }
 
