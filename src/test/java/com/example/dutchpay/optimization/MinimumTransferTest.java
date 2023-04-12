@@ -160,7 +160,6 @@ public class MinimumTransferTest {
 
     private void printResult(long startTime1, List<String> list1, long finishTime1) {
         System.out.println("실행 시간 : " + (finishTime1 - startTime1) + "ms");
-        list1.forEach(System.out::println);
         System.out.println("이체 횟수 : " + list1.size());
         System.out.println("---------------");
     }
