@@ -36,11 +36,6 @@ class DutchPayServiceTest {
         dutchpayDb.add(list2);
     }
 
-    @AfterEach
-    void afterEach(){
-        dutchPayService.dutchinit();
-    }
-
 
     @DisplayName("금액 합치기 - 성공")
     @Test
@@ -53,7 +48,7 @@ class DutchPayServiceTest {
     @DisplayName("리스트가 없는 상태에서 금액 합치기")
     @Test
     void calculateDutchPayNoMoneyTest(){
-        dutchpayDb.clear();
+        dutchPayService.dutchinit();
         dutchPayService.calculateDutchPayMoney();
 
         assertThat(dutchpayTotal).isEqualTo(List.of());
