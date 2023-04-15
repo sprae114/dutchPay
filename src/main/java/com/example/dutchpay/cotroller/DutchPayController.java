@@ -31,16 +31,16 @@ public class DutchPayController {
 
     private final DutchPayService dutchPayService;
     private final DutchResultRepository dutchResultRepository;
-    private final UserAccountRepository userAccountRepository;
+
+    private final UserAccountService userAccountService;
 
 
     public static List<Long> dutchpayMain = new ArrayList<>();
 
     @GetMapping
-    public String dutchHome(@AuthenticationPrincipal OAuth2User principal, Model model) {
-        Map<String, Object> properties = (Map<String, Object>) principal.getAttribute("properties");
-        String nickname = (String) properties.get("nickname");
-        model.addAttribute("name", nickname);
+    public String dutchHome(@AuthenticationPrincipal LoginPrincipal loginPrincipal, Model model) {
+
+        model.addAttribute("name", loginPrincipal.getName());
 
         return "dutchHome";
     }
@@ -126,18 +126,13 @@ public class DutchPayController {
         return "redirect:/dutch";
     }
 
-
-
     @PostMapping("/recordDutchResult")
-    public String recordDutchResult(@AuthenticationPrincipal OAuth2User principal,
+    public String recordDutchResult(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                     @RequestParam String recordDutch) {
-
-        UserAccount userAccount = userAccountRepository
-                .findById((Long) principal.getAttribute("id"))
-                .orElseThrow(() ->
+        UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId()).orElseThrow(() ->
                 new IllegalArgumentException("해당 사용자가 없습니다."));
 
-        dutchResultRepository.save(new DutchResult(recordDutch, userAccount));
+        dutchResultRepository.save(new DutchResult(recordDutch, userAccountDto.toEntity()));
 
         return "redirect:/dutch";
     }

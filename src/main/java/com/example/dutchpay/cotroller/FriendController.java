@@ -2,6 +2,7 @@ package com.example.dutchpay.cotroller;
 
 import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.FriendSaveDto;
+import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.service.DutchPayService;
 import com.example.dutchpay.repository.FriendRepository;
 import com.example.dutchpay.service.FriendService;
@@ -31,8 +32,8 @@ public class FriendController {
     @Autowired
     public FriendController(FriendRepository friendRepository,
                             FriendService friendService,
-                            UserAccountRepository userAccountRepository
-                            , DutchPayService dutchPayService) {
+                            UserAccountRepository userAccountRepository,
+                            DutchPayService dutchPayService) {
         this.friendRepository = friendRepository;
         this.friendService = friendService;
         this.userAccountRepository = userAccountRepository;
@@ -40,23 +41,22 @@ public class FriendController {
     }
 
     @GetMapping("/friend")
-    public String friendList(@AuthenticationPrincipal OAuth2User principal,
+    public String friendList(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                              Model model) {
 
-        model.addAttribute("friendList", friendRepository
-                .findAllByUserAccountId((Long) principal.getAttribute("id")));
+        model.addAttribute("friendList", friendRepository.findAllByUserAccountId(loginPrincipal.getId()));
         model.addAttribute("newFriend", new FriendSaveDto());
 
         return "friend";
     }
 
     @PostMapping("/friend")
-    public String dutchAddFriend(@AuthenticationPrincipal OAuth2User principal,
+    public String dutchAddFriend(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                  @Validated @ModelAttribute("newFriend") FriendSaveDto friendSaveDto,
                                  BindingResult bindingResult) {
 
-        UserAccount userAccount = userAccountRepository.findById((Long) principal.getAttribute("id")).orElseThrow(
-                () -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + principal.getAttribute("id"))
+        UserAccount userAccount = userAccountRepository.findById(loginPrincipal.getId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + loginPrincipal.getId())
         );
 
         //검증에 실패하면 다시 입력 폼으로
@@ -79,11 +79,10 @@ public class FriendController {
     }
     
     @GetMapping("/dutch/friend")
-    public String dutchFriendSelect(@AuthenticationPrincipal OAuth2User principal,
+    public String dutchFriendSelect(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                     Model model) {
 
-        friendService.addFriendSelectListBefore(friendRepository
-                .findAllByUserAccountId((Long) principal.getAttribute("id")));
+        friendService.addFriendSelectListBefore(friendRepository.findAllByUserAccountId(loginPrincipal.getId()));
         model.addAttribute("friendList", friendSelectListBefore);
 
         return "friendSelect";

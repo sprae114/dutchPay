@@ -1,6 +1,7 @@
 package com.example.dutchpay.cotroller;
 
 import com.example.dutchpay.domain.DutchResult;
+import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.service.DutchResultService;
 import com.example.dutchpay.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,17 @@ public class HomeController {
     }
 
     @GetMapping("/main")
-    public String main(@AuthenticationPrincipal OAuth2User principal, Model model) {
-        userService.saveUser(principal);
+    public String main(@AuthenticationPrincipal LoginPrincipal loginPrincipal, Model model) {
+        userService.saveUser(loginPrincipal.getId(), loginPrincipal.getName(), loginPrincipal.getEmail());
 
         return "redirect:/dutch";
     }
 
     @GetMapping("/previousCalculations")
-    public String previousCalculations(@AuthenticationPrincipal OAuth2User principal,
+    public String previousCalculations(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                        Model model) {
 
-        List<DutchResult> dutchResultList = dutchResultService.getDutchResult(principal);
+        List<DutchResult> dutchResultList = dutchResultService.getDutchResult(loginPrincipal);
         model.addAttribute("dutchResultList", dutchResultList);
 
         return "previousCalculations";
