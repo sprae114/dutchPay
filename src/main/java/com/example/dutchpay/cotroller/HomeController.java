@@ -33,8 +33,8 @@ public class HomeController {
     }
 
     @GetMapping("/main")
-    public String main(@AuthenticationPrincipal LoginPrincipal loginPrincipal, Model model) {
-        userService.saveUser(loginPrincipal.getId(), loginPrincipal.getName(), loginPrincipal.getEmail());
+    public String main(@AuthenticationPrincipal LoginPrincipal loginPrincipal) {
+        userService.saveUser(loginPrincipal);
 
         return "redirect:/dutch";
     }
