@@ -3,12 +3,10 @@ package com.example.dutchpay.controller;
 
 import com.example.dutchpay.config.TestSecurityConfig;
 import com.example.dutchpay.domain.Friend;
-import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.service.DutchPayService;
 import com.example.dutchpay.service.FriendService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -47,15 +44,8 @@ class FriendControllerTest {
 
     @MockBean private DutchPayService dutchPayService;
 
-    private UserAccount userAccount;
-
     public FriendControllerTest(@Autowired MockMvc mockMvc) {
         this.mockMvc = mockMvc;
-    }
-
-    @BeforeEach
-    public void setup() {
-        userAccount = new UserAccount(1111L, "김철수", "abc@naver.com");
     }
 
     @DisplayName("친구 목록 페이지 테스트 - 로그인전")

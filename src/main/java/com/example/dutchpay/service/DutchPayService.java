@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.dutchpay.cotroller.DutchPayController.dutchpayMain;
+import static com.example.dutchpay.controller.DutchPayController.dutchpayMain;
 import static com.example.dutchpay.service.InMemoryDutchPayService.dutchpayDb;
 @Transactional
 @Service

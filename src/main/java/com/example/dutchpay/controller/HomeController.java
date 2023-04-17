@@ -1,4 +1,4 @@
-package com.example.dutchpay.cotroller;
+package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.dto.LoginPrincipal;

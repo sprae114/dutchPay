@@ -5,11 +5,8 @@ import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.dto.UserAccountDto;
 import com.example.dutchpay.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Map;
 import java.util.Optional;
 
 @Transactional

@@ -1,4 +1,4 @@
-package com.example.dutchpay.cotroller;
+package com.example.dutchpay.controller;
 
 import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.dto.LoginPrincipal;
@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.example.dutchpay.service.FriendService.*;
 

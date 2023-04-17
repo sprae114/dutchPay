@@ -1,4 +1,4 @@
-package com.example.dutchpay;
+package com.example.dutchpay.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

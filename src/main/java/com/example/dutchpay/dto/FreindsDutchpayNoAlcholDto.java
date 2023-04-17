@@ -1,6 +1,6 @@
 package com.example.dutchpay.dto;
 
-import com.example.dutchpay.cotroller.DutchPayController;
+import com.example.dutchpay.controller.DutchPayController;
 import lombok.ToString;
 
 import java.util.ArrayList;

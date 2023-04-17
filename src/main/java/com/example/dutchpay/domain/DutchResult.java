@@ -9,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 
 @ToString
@@ -52,12 +51,6 @@ public class DutchResult {
 
     public DutchResult(String result, UserAccount userAccount) {
         this.result = result;
-        this.userAccount = userAccount;
-    }
-
-    public DutchResult(String result, LocalDate createdAt, UserAccount userAccount) {
-        this.result = result;
-        this.createdAt = createdAt;
         this.userAccount = userAccount;
     }
 

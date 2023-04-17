@@ -1,14 +1,11 @@
-package com.example.dutchpay.cotroller;
+package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
-import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.*;
 import com.example.dutchpay.repository.DutchResultRepository;
-import com.example.dutchpay.repository.UserAccountRepository;
 import com.example.dutchpay.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.example.dutchpay.service.DutchPayService.dutchpayTotal;
