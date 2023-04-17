@@ -111,17 +111,13 @@ public class DutchPayController {
     public String dutchResultDetail(Model model) {
         String totalMoney = dutchPayService.calculateDutchPayMoney();
 
-        List<String> dutchPayResult = dutchPayService.minTransfers(dutchpayTotal,
+        List<String> dutchPayResult = DutchPayService.minTransfers(dutchpayTotal,
                 friendSelectListAfter.stream().map(FriendSelectSaveDto::getName).collect(Collectors.toList()));
 
         model.addAttribute("result", dutchPayService.printDutchPay(totalMoney, dutchPayResult));
         return "cal/calculraterResult";
     }
 
-    @PostMapping("/dutchResult")
-    public String saveDutchResult(@ModelAttribute String result) {
-        return "redirect:/dutch";
-    }
 
     @PostMapping("/recordDutchResult")
     public String recordDutchResult(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
