@@ -28,12 +28,16 @@ public class DutchPayService {
 
     //최소이체로 이체하기
     public static List<String> minTransfers(List<Long> balances, List<String> names) {
-        int n = balances.size();
 
-        // 0일 때 제외
-        if (n == 0) {
+        if (balances == null || names == null) {
             return new ArrayList<>();
         }
+
+        if (balances.isEmpty() || names.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        int n = balances.size();
 
         List<String> res = new ArrayList<>();
 
