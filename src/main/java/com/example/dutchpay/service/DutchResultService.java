@@ -20,4 +20,8 @@ public class DutchResultService {
     public List<DutchResult> getDutchResult(LoginPrincipal loginPrincipal){
         return dutchResultRepository.findAllByUserAccountId(loginPrincipal.getId());
     }
+
+    public void saveDutchResult(DutchResult dutchResult){
+        dutchResultRepository.save(dutchResult);
+    }
 }

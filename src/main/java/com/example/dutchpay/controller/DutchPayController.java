@@ -26,7 +26,8 @@ import static com.example.dutchpay.service.InMemoryDutchPayService.dutchpayDb;
 public class DutchPayController {
 
     private final DutchPayService dutchPayService;
-    private final DutchResultRepository dutchResultRepository;
+
+    private final DutchResultService dutchResultService;
 
     private final UserAccountService userAccountService;
 
@@ -78,7 +79,7 @@ public class DutchPayController {
     }
 
     @PostMapping("/dutchPayList/noAlcohol")
-    public String dutchResultNoAlcoholSubmit(@ModelAttribute FreindsDutchpayNoAlcholDto form, Model model) {
+    public String dutchResultNoAlcoholSubmit(@ModelAttribute FreindsDutchpayNoAlcholDto form) {
         form.calculate();
 
         return "redirect:/dutch/dutchPayList";
@@ -99,7 +100,7 @@ public class DutchPayController {
     }
 
     @PostMapping("/dutchPayList/alcohol")
-    public String dutchResultAlcoholSubmit(@ModelAttribute FreindsDutchpayDto form, Model model) {
+    public String dutchResultAlcoholSubmit(@ModelAttribute FreindsDutchpayDto form) {
         form.calculate();
 
         return "redirect:/dutch/dutchPayList";
@@ -128,7 +129,7 @@ public class DutchPayController {
         UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId()).orElseThrow(() ->
                 new IllegalArgumentException("해당 사용자가 없습니다."));
 
-        dutchResultRepository.save(new DutchResult(recordDutch, userAccountDto.toEntity()));
+        dutchResultService.saveDutchResult(new DutchResult(recordDutch, userAccountDto.toEntity()));
 
         return "redirect:/dutch";
     }
