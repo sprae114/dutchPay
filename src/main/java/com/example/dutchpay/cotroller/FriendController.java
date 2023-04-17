@@ -1,16 +1,14 @@
 package com.example.dutchpay.cotroller;
 
-import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.dto.LoginPrincipal;
+import com.example.dutchpay.dto.UserAccountDto;
 import com.example.dutchpay.service.DutchPayService;
-import com.example.dutchpay.repository.FriendRepository;
 import com.example.dutchpay.service.FriendService;
-import com.example.dutchpay.repository.UserAccountRepository;
+import com.example.dutchpay.service.UserAccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,25 +16,23 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.dutchpay.service.FriendService.*;
 
 @Slf4j
 @Controller
 public class FriendController {
-    private final FriendRepository friendRepository;
     private final FriendService friendService;
-    private final UserAccountRepository userAccountRepository;
+    private final UserAccountService userAccountService;
     private final DutchPayService dutchPayService;
 
     @Autowired
-    public FriendController(FriendRepository friendRepository,
-                            FriendService friendService,
-                            UserAccountRepository userAccountRepository,
+    public FriendController(FriendService friendService,
+                            UserAccountService userAccountService,
                             DutchPayService dutchPayService) {
-        this.friendRepository = friendRepository;
         this.friendService = friendService;
-        this.userAccountRepository = userAccountRepository;
+        this.userAccountService = userAccountService;
         this.dutchPayService = dutchPayService;
     }
 
@@ -44,7 +40,7 @@ public class FriendController {
     public String friendList(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                              Model model) {
 
-        model.addAttribute("friendList", friendRepository.findAllByUserAccountId(loginPrincipal.getId()));
+        model.addAttribute("friendList", friendService.searchFriend(loginPrincipal));
         model.addAttribute("newFriend", new FriendSaveDto());
 
         return "friend";
@@ -55,8 +51,9 @@ public class FriendController {
                                  @Validated @ModelAttribute("newFriend") FriendSaveDto friendSaveDto,
                                  BindingResult bindingResult) {
 
-        UserAccount userAccount = userAccountRepository.findById(loginPrincipal.getId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + loginPrincipal.getId())
+
+        UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + loginPrincipal)
         );
 
         //검증에 실패하면 다시 입력 폼으로
@@ -65,7 +62,7 @@ public class FriendController {
             return "/friend";
         }
 
-        friendService.addFriend(friendSaveDto.toEntity(userAccount));
+        friendService.addFriend(friendSaveDto.toEntity(userAccountDto.toEntity()));
 
         return "redirect:/" + "friend";
     }
@@ -82,7 +79,7 @@ public class FriendController {
     public String dutchFriendSelect(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                     Model model) {
 
-        friendService.addFriendSelectListBefore(friendRepository.findAllByUserAccountId(loginPrincipal.getId()));
+        friendService.addFriendSelectListBefore(friendService.searchFriend(loginPrincipal));
         model.addAttribute("friendList", friendSelectListBefore);
 
         return "friendSelect";
