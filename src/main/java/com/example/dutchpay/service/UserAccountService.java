@@ -24,6 +24,11 @@ public class UserAccountService {
                 .map(UserAccountDto::from);
     }
 
+    public Optional<UserAccountDto> searchUser(LoginPrincipal loginPrincipal){
+        return userAccountRepository.findById(loginPrincipal.getId())
+                .map(UserAccountDto::from);
+    }
+
     public UserAccountDto saveUser(Long id, String name, String email) {
         return UserAccountDto.from(userAccountRepository.save(UserAccount.of(id, name, email)));
     }

@@ -25,25 +25,18 @@ public class TestSecurityConfig {
 
     @BeforeTestMethod
     public void securitySetUp() {
+        given(userAccountService.searchUser(any(LoginPrincipal.class)))
+                .willReturn(Optional.of(createUserAccountDto()));
+
         given(userAccountService.searchUser(any(Long.class)))
                 .willReturn(Optional.of(createUserAccountDto()));
+
         given(userAccountService.saveUser(any(Long.class), anyString(), anyString()))
                 .willReturn(createUserAccountDto());
-        given(userAccountService.saveUser(any(LoginPrincipal.class))).willReturn(createUserAccountDto());
-    }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetailsService userDetailsService = Mockito.mock(UserDetailsService.class);
-        UserDetails user = User.builder()
-                .username("1111")
-                .password("password")
-                .authorities("ROLE_USER")
-                .build();
-        Mockito.when(userDetailsService.loadUserByUsername("1111")).thenReturn(user);
-        return userDetailsService;
+        given(userAccountService.saveUser(any(LoginPrincipal.class)))
+                .willReturn(createUserAccountDto());
     }
-
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
