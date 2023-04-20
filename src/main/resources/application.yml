@@ -1,16 +1,59 @@
+debug: false
+management.endpoints.web.exposure.include: "*"
+
+logging:
+  level:
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
+    url: jdbc:mysql://localhost:3306/dutchpaydb
+    username: yohan
+    password: qwer1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     defer-datasource-initialization: true
     hibernate.ddl-auto: create-drop
-#    show-sql: true
+    show-sql: true
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
-  h2.console.enabled: true
-  sql.init.mode: always
+  h2:
+    console:
+      enabled: true
+
+  sql:
+    init:
+      mode: always
+
   data.rest:
     base-path: /api
     detection-strategy: annotated
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: daaac07bb74eff6a2cbbecdacae6850c
+            client-secret: msuKJTDeKa5H2gkxQdHVs0pYhDzJb1fw
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            authorization-grant-type: authorization_code
+            client-authentication-method: post
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+---
+
+spring:
+  config.activate.on-profile: heroku
+  datasource:
+    url: ${CLEARDB_DATABASE_URL}
+  jpa.hibernate.ddl-auto: create
+  sql.init.mode: always

@@ -1,4 +1,4 @@
-package com.example.dutchpay;
+package com.example.dutchpay.optimization;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,12 @@ public class MinimumTransferTest {
         long finishTime5 = System.currentTimeMillis();
         printResult(startTime5, list5, finishTime5);
 
-        // then
+
+        System.out.println(">> 무한루프 빠지거나 예외처리, 송금거래가 여러 차례발생하는 경우 제외함");
+        long startTime6 = System.currentTimeMillis();
+        List<String> list6 = sameMoneyAfterBigMoneyMinTransfers4(balances.clone(), names);
+        long finishTime6 = System.currentTimeMillis();
+        printResult(startTime6, list6, finishTime6);
     }
 
     @Test
@@ -94,6 +99,12 @@ public class MinimumTransferTest {
         List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
         long finishTime5 = System.currentTimeMillis();
         printResult(startTime5, list5, finishTime5);
+
+        System.out.println(">> 무한루프 빠지거나 예외처리, 송금거래가 여러 차례발생하는 경우 제외함");
+        long startTime6 = System.currentTimeMillis();
+        List<String> list6 = sameMoneyAfterBigMoneyMinTransfers4(balances.clone(), names);
+        long finishTime6 = System.currentTimeMillis();
+        printResult(startTime6, list6, finishTime6);
     }
 
 
@@ -138,12 +149,17 @@ public class MinimumTransferTest {
         List<String> list5 = sameMoneyAfterBigMoneyMinTransfers3(balances.clone(), names);
         long finishTime5 = System.currentTimeMillis();
         printResult(startTime5, list5, finishTime5);
+
+        System.out.println(">> 무한루프 빠지거나 예외처리, 송금거래가 여러 차례발생하는 경우 제외함");
+        long startTime6 = System.currentTimeMillis();
+        List<String> list6 = sameMoneyAfterBigMoneyMinTransfers4(balances.clone(), names);
+        long finishTime6 = System.currentTimeMillis();
+        printResult(startTime6, list6, finishTime6);
     }
 
 
     private void printResult(long startTime1, List<String> list1, long finishTime1) {
         System.out.println("실행 시간 : " + (finishTime1 - startTime1) + "ms");
-        list1.forEach(System.out::println);
         System.out.println("이체 횟수 : " + list1.size());
         System.out.println("---------------");
     }
@@ -385,7 +401,90 @@ public class MinimumTransferTest {
         return res;
     }
 
-    /*
+
+    public static List<String> sameMoneyAfterBigMoneyMinTransfers4(Long[] balances, String[] names) {
+        int n = balances.length;
+
+        // 0일 때 제외
+        if (n == 0) {
+            return new ArrayList<>();
+        }
+
+        List<String> res = new ArrayList<>();
+
+        // 0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
+        List<Long> tempBalances = new ArrayList<>(Arrays.asList(balances));
+        for (int i = 0; i < n; i++) {
+            if (tempBalances.get(i) != 0L) {
+                for (int j = i + 1; j < n; j++) {
+                    if (Math.abs(tempBalances.get(i)) == Math.abs(tempBalances.get(j))) {
+                        if (tempBalances.get(i) > 0) {
+                            res.add(names[j] + " -> " + names[i] + "에게 보낼 금액은 : " + String.format("%,d", Math.abs(tempBalances.get(i))) + "원 입니다.");
+                            tempBalances.set(i, 0L);
+                            tempBalances.set(j, 0L);
+                        } else if (tempBalances.get(j) > 0) {
+                            res.add(names[i] + " -> " + names[j] + "에게 보낼 금액은 : " + String.format("%,d", Math.abs(tempBalances.get(i))) + "원 입니다.");
+                            tempBalances.set(i, 0L);
+                            tempBalances.set(j, 0L);
+                        }
+                    }
+                }
+            }
+        }
+
+        // 송금 거래 처리
+        int count = n;
+        while (count > 0) {
+            int maxIndex = 0;
+            boolean found = false;
+
+            // 가장 큰 금액 찾기
+            for (int i = 1; i < n; i++) {
+                if (tempBalances.get(i) > tempBalances.get(maxIndex)) {
+                    maxIndex = i;
+                }
+            }
+
+            // 큰 금액이 0이 될 때까지 반복
+            while (tempBalances.stream().filter(balance -> balance != 0).count() != 1) {
+                found = true;
+                int minIndex = 0;
+
+                // 최소 금액을 가지는 참가자 선택
+                for (int j = 1; j < n; j++) {
+                    if (tempBalances.get(j) + tempBalances.get(maxIndex) == 0) {
+                        minIndex = j;
+                        break;
+                    }
+
+                    if (tempBalances.get(j) < tempBalances.get(minIndex)) {
+                        minIndex = j;
+                    }
+                }
+
+                if (tempBalances.get(minIndex) == 0 && tempBalances.get(maxIndex) == 0) {
+                    break;
+                }
+
+                // 송금 처리
+                Long amount = Math.min(-tempBalances.get(minIndex), tempBalances.get(maxIndex));
+
+                res.add(names[minIndex] + " -> " + names[maxIndex] + "에게 보낼 금액은 : " + String.format("%,d", amount) + "원 입니다.");
+                tempBalances.set(minIndex, tempBalances.get(minIndex) + amount);
+                tempBalances.set(maxIndex, tempBalances.get(maxIndex) - amount);
+            }
+
+            if (!found) {
+                break;
+            }
+
+            count--;
+        }
+
+        return res;
+    }
+
+        /*
      * dfs로 풀어보기
      */
 

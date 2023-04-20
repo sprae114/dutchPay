@@ -1,10 +1,11 @@
-package com.example.dutchpay.cotroller;
+package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
-import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.*;
+import com.example.dutchpay.repository.DutchResultRepository;
 import com.example.dutchpay.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +26,19 @@ import static com.example.dutchpay.service.InMemoryDutchPayService.dutchpayDb;
 public class DutchPayController {
 
     private final DutchPayService dutchPayService;
-    private final DutchResultRepository dutchResultRepository;
-    private final UserAccountRepository userAccountRepository;
+
+    private final DutchResultService dutchResultService;
+
+    private final UserAccountService userAccountService;
+
 
     public static List<Long> dutchpayMain = new ArrayList<>();
 
     @GetMapping
-    public String dutchHome() {
+    public String dutchHome(@AuthenticationPrincipal LoginPrincipal loginPrincipal, Model model) {
+
+        model.addAttribute("name", loginPrincipal.getName());
+
         return "dutchHome";
     }
 
@@ -72,7 +79,7 @@ public class DutchPayController {
     }
 
     @PostMapping("/dutchPayList/noAlcohol")
-    public String dutchResultNoAlcoholSubmit(@ModelAttribute FreindsDutchpayNoAlcholDto form, Model model) {
+    public String dutchResultNoAlcoholSubmit(@ModelAttribute FreindsDutchpayNoAlcholDto form) {
         form.calculate();
 
         return "redirect:/dutch/dutchPayList";
@@ -93,7 +100,7 @@ public class DutchPayController {
     }
 
     @PostMapping("/dutchPayList/alcohol")
-    public String dutchResultAlcoholSubmit(@ModelAttribute FreindsDutchpayDto form, Model model) {
+    public String dutchResultAlcoholSubmit(@ModelAttribute FreindsDutchpayDto form) {
         form.calculate();
 
         return "redirect:/dutch/dutchPayList";
@@ -104,29 +111,21 @@ public class DutchPayController {
     public String dutchResultDetail(Model model) {
         String totalMoney = dutchPayService.calculateDutchPayMoney();
 
-        List<String> dutchPayResult = dutchPayService.minTransfers(dutchpayTotal,
+        List<String> dutchPayResult = DutchPayService.minTransfers(dutchpayTotal,
                 friendSelectListAfter.stream().map(FriendSelectSaveDto::getName).collect(Collectors.toList()));
 
         model.addAttribute("result", dutchPayService.printDutchPay(totalMoney, dutchPayResult));
         return "cal/calculraterResult";
     }
 
-    @PostMapping("/dutchResult")
-    public String saveDutchResult(@ModelAttribute String result) {
-        return "redirect:/dutch";
-    }
-
-
 
     @PostMapping("/recordDutchResult")
-    public String recordDutchResult(@RequestParam String recordDutch) {
-        System.out.println(">> recordDutchResult " + recordDutch);
-        UserAccount userAccount = userAccountRepository.findById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + 1L));
+    public String recordDutchResult(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
+                                    @RequestParam String recordDutch) {
+        UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId()).orElseThrow(() ->
+                new IllegalArgumentException("해당 사용자가 없습니다."));
 
-        dutchResultRepository.save(new DutchResult(recordDutch, userAccount));
-
-        //todo : 로그인 만들고 로그인한 사용자의 id를 가져와서 저장
+        dutchResultService.saveDutchResult(new DutchResult(recordDutch, userAccountDto.toEntity()));
 
         return "redirect:/dutch";
     }

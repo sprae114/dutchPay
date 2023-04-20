@@ -1,7 +1,6 @@
-package com.example.dutchpay.service;
+package com.example.dutchpay.repository;
 
 import com.example.dutchpay.domain.DutchResult;
-import com.example.dutchpay.domain.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

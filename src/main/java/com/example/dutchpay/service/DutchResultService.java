@@ -1,21 +1,27 @@
 package com.example.dutchpay.service;
 
 import com.example.dutchpay.domain.DutchResult;
-import com.example.dutchpay.domain.UserAccount;
+import com.example.dutchpay.dto.LoginPrincipal;
+import com.example.dutchpay.repository.DutchResultRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class DutchResultService {
     public DutchResultRepository dutchResultRepository;
-    public UserAccountRepository userAccountRepository;
 
     public DutchResultService(DutchResultRepository dutchResultRepository) {
         this.dutchResultRepository = dutchResultRepository;
     }
 
-    public List<DutchResult> getDutchResult(){
-        return dutchResultRepository.findAllByUserAccountId(1L);
+    public List<DutchResult> getDutchResult(LoginPrincipal loginPrincipal){
+        return dutchResultRepository.findAllByUserAccountId(loginPrincipal.getId());
+    }
+
+    public void saveDutchResult(DutchResult dutchResult){
+        dutchResultRepository.save(dutchResult);
     }
 }
