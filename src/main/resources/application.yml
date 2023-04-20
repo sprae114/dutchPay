@@ -48,3 +48,12 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
+---
+
+spring:
+  config.activate.on-profile: heroku
+  datasource:
+    url: ${CLEARDB_DATABASE_URL}
+  jpa.hibernate.ddl-auto: create
+  sql.init.mode: always
