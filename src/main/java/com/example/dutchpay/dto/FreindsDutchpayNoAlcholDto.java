@@ -1,6 +1,6 @@
 package com.example.dutchpay.dto;
 
-import com.example.dutchpay.cotroller.DutchPayController;
+import com.example.dutchpay.controller.DutchPayController;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class FreindsDutchpayNoAlcholDto {
         sumMoney += totalMoney;
 
         //각각의 금액 구하기
-        long amountDue = Math.round((totalMoney / max(1, count)) / 100.0) * 100;
+        long amountDue = Math.round((double)(totalMoney / max(1, count)) / 100.0) * 100;
 
         //각각의 금액을 ArrayList에 넣기
         List<Long> result = dutchpaysNoAlchol.stream()
@@ -79,7 +79,7 @@ public class FreindsDutchpayNoAlcholDto {
         sumMoney += totalMoney;
 
         //각각의 금액 구하기
-        long amountDue = Math.round((totalMoney / max(1, count)) / 100.0) * 100;
+        long amountDue = Math.round((double) (totalMoney / max(1, count)) / 100.0) * 100;
 
         //각각의 금액을 ArrayList에 넣기
         List<Long> result = dutchpaysNoAlchol.stream()

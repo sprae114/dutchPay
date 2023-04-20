@@ -1,11 +1,11 @@
-package com.example.dutchpay;
+package com.example.dutchpay.jpa;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.Friend;
 import com.example.dutchpay.domain.UserAccount;
-import com.example.dutchpay.service.DutchResultRepository;
-import com.example.dutchpay.service.FriendRepository;
-import com.example.dutchpay.service.UserAccountRepository;
+import com.example.dutchpay.repository.DutchResultRepository;
+import com.example.dutchpay.repository.FriendRepository;
+import com.example.dutchpay.repository.UserAccountRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(500);
+                .hasSize(1000);
     }
 
     @DisplayName("userAccount select 테스트")
@@ -57,7 +57,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(600);
+                .hasSize(100);
     }
 
     @DisplayName("dutchResult select 테스트")
@@ -71,7 +71,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(200);
+                .hasSize(500);
     }
 
 
@@ -96,7 +96,7 @@ public class JpaRepositoryTest {
         long previousCount = userAccountRepository.count();
 
         // When
-        userAccountRepository.save(UserAccount.of("Lownsbrough", "mbownass3@xing.com", "tnwhgx71fud"));
+        userAccountRepository.save(UserAccount.of(101L, "john", "mbownass3@xing.com"));
 
         // Then
         Assertions.assertThat(userAccountRepository.count()).isEqualTo(previousCount+1);

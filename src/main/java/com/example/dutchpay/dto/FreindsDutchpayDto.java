@@ -1,12 +1,13 @@
 package com.example.dutchpay.dto;
 
-import com.example.dutchpay.cotroller.DutchPayController;
+import com.example.dutchpay.controller.DutchPayController;
 import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dutchpay.service.InMemoryDutchPayService.dutchpayDb;
+import static java.lang.Math.max;
 import static java.util.stream.Collectors.toList;
 
 @ToString
@@ -35,7 +36,7 @@ public class FreindsDutchpayDto {
         DutchPayController.dutchpayMain.add(totalMoney);
 
         //각각의 금액 구하기
-        long amountDue = Math.round((totalMoney / count) / 100.0) * 100;
+        long amountDue = Math.round((double)(totalMoney / max(1, count)) / 100.0) * 100;
 
 
         //각각의 금액을 ArrayList에 넣기
