@@ -214,23 +214,7 @@ public class MinimumTransferTest {
         List<String> res = new ArrayList<>();
 
         //0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
-        for (int i = 0; i < n; i++) {
-            if (balances[i] != 0) {
-                for (int j = i + 1; j < n; j++) {
-                    if ((Math.abs(balances[i]) == Math.abs(balances[j])) && (balances[i] > 0)){
-                        res.add(names[j] + " -> " + names[i] + " 보낼 금액 : " + Math.abs(balances[i]) + "원");
-                        balances[i] = 0L;
-                        balances[j] = 0L;
-                    }
-
-                    if ((Math.abs(balances[i]) == Math.abs(balances[j])) && (balances[j] > 0)){
-                        res.add(names[i] + " -> " + names[j] + " 보낼 금액 : " + Math.abs(balances[i]) + "원");
-                        balances[i] = 0L;
-                        balances[j] = 0L;
-                    }
-                }
-            }
-        }
+        excludeZero(balances, names, n, res);
 
         //음수 잔액이 가장 작은 계좌와 양수 잔액이 가장 큰 계좌를 찾습니다.
         //두 계좌의 잔액 중 작은 값을 이체합니다. 이렇게 하면 두 계좌 중 하나의 잔액이 0이 됩니다.
@@ -270,24 +254,7 @@ public class MinimumTransferTest {
         int n = balances.length;
         List<String> res = new ArrayList<>();
 
-        //0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
-        for (int i = 0; i < n; i++) {
-            if (balances[i] != 0) {
-                for (int j = i + 1; j < n; j++) {
-                    if ((Math.abs(balances[i]) == Math.abs(balances[j])) && (balances[i] > 0)){
-                        res.add(names[j] + " -> " + names[i] + " 보낼 금액 : " + Math.abs(balances[i]) + "원");
-                        balances[i] = 0L;
-                        balances[j] = 0L;
-                    }
-
-                    if ((Math.abs(balances[i]) == Math.abs(balances[j])) && (balances[j] > 0)){
-                        res.add(names[i] + " -> " + names[j] + " 보낼 금액 : " + Math.abs(balances[i]) + "원");
-                        balances[i] = 0L;
-                        balances[j] = 0L;
-                    }
-                }
-            }
-        }
+        excludeZero(balances, names, n, res);
 
         //음수 잔액이 가장 작은 계좌와 양수 잔액이 가장 큰 계좌를 찾습니다.
         //두 계좌의 잔액 중 작은 값을 이체합니다. 이렇게 하면 두 계좌 중 하나의 잔액이 0이 됩니다.
@@ -326,14 +293,7 @@ public class MinimumTransferTest {
         return res;
     }
 
-    /*
-     * 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 이체 같은 금액 우선순위 두기
-     */
-
-    public static List<String> sameMoneyAfterBigMoneyMinTransfers3(Long[] balances, String[] names) {
-        int n = balances.length;
-        List<String> res = new ArrayList<>();
-
+    private static void excludeZero(Long[] balances, String[] names, int n, List<String> res) {
         //0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
         for (int i = 0; i < n; i++) {
             if (balances[i] != 0) {
@@ -352,6 +312,18 @@ public class MinimumTransferTest {
                 }
             }
         }
+    }
+
+    /*
+     * 절대값이 같은 돈은 먼저 이체한후 큰 금액부터 먼저 이체 같은 금액 우선순위 두기
+     */
+
+    public static List<String> sameMoneyAfterBigMoneyMinTransfers3(Long[] balances, String[] names) {
+        int n = balances.length;
+        List<String> res = new ArrayList<>();
+
+        //0을 제외한 절대값이 같은 경우, 각각 요소를 0으로 만들기
+        excludeZero(balances, names, n, res);
 
 
         while (true) {
