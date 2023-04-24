@@ -2,7 +2,6 @@ package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.dto.*;
-import com.example.dutchpay.repository.DutchResultRepository;
 import com.example.dutchpay.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import static com.example.dutchpay.service.DutchPayService.dutchpayTotal;
@@ -125,8 +125,18 @@ public class DutchPayController {
         UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId()).orElseThrow(() ->
                 new IllegalArgumentException("해당 사용자가 없습니다."));
 
-        dutchResultService.saveDutchResult(new DutchResult(recordDutch, userAccountDto.toEntity()));
+        dutchResultService.saveDutchResult(new DutchResult(recordDutch, userAccountDto.toEntity(), makeNames()));
 
         return "redirect:/dutch";
     }
+
+    private String makeNames() {
+        StringJoiner sj = new StringJoiner(",");
+        for (String name : friendSelectListAfter.stream().map(FriendSelectSaveDto::getName).collect(Collectors.toList())) {
+            sj.add(name);
+        }
+
+        return sj.toString();
+    }
+
 }

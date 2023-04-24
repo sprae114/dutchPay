@@ -3,8 +3,12 @@ package com.example.dutchpay.controller;
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.service.DutchResultService;
+import com.example.dutchpay.service.PaginationService;
 import com.example.dutchpay.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +23,15 @@ public class HomeController {
     private final DutchResultService dutchResultService;
     private final UserAccountService userService;
 
+    private final PaginationService paginationService;
+
     @Autowired
-    public HomeController(DutchResultService dutchResultService, UserAccountService userService) {
+    public HomeController(DutchResultService dutchResultService,
+                          UserAccountService userService,
+                          PaginationService paginationService) {
         this.dutchResultService = dutchResultService;
         this.userService = userService;
+        this.paginationService= paginationService;
     }
 
     @RequestMapping("/")
@@ -39,10 +48,15 @@ public class HomeController {
 
     @GetMapping("/previousCalculations")
     public String previousCalculations(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
+                                       @PageableDefault(size = 4) Pageable pageable,
                                        Model model) {
 
-        List<DutchResult> dutchResultList = dutchResultService.getDutchResult(loginPrincipal);
+        Page<DutchResult> dutchResultList = dutchResultService.getDutchResult(loginPrincipal, pageable);
+        List<Integer> barNumbers = paginationService
+                .getPaginationBarNumbers(pageable.getPageNumber(), dutchResultList.getTotalPages());
+
         model.addAttribute("dutchResultList", dutchResultList);
+        model.addAttribute("paginationBarNumbers", barNumbers);
 
         return "previousCalculations";
     }
