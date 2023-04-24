@@ -52,9 +52,10 @@ public class DutchResult {
         this.result = result;
     }
 
-    public DutchResult(String result, UserAccount userAccount) {
+    public DutchResult(String result, UserAccount userAccount, String names) {
         this.result = result;
         this.userAccount = userAccount;
+        this.names = names;
     }
 
     static public DutchResult of(String result) {
