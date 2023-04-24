@@ -17,11 +17,14 @@ import java.time.LocalDate;
 @EntityListeners(AuditingEntityListener.class)
 public class DutchResult {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dutchResult_id")
+    @Column(name = "dutchResult_id") @Getter
     public Long id;
 
     @Column(length=1500) @Getter @Setter
     public String result;
+
+    @Getter
+    public String names;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
