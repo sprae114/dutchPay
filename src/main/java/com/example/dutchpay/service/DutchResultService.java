@@ -26,10 +26,14 @@ public class DutchResultService {
             return dutchResultRepository.findAll(pageable);
         }
 
-        return switch (searchType){
-            case NAMES -> dutchResultRepository.findByNamesContaining(searchKeyword, pageable);
-            case CREATED_AT -> dutchResultRepository.findByCreatedAtContaining(searchKeyword, pageable);
-        };
+        switch (searchType){
+            case NAMES:
+                return dutchResultRepository.findByNamesContaining(searchKeyword, pageable);
+            case CREATED_AT:
+                return dutchResultRepository.findByCreatedAtContaining(searchKeyword, pageable);
+            default:
+                throw new IllegalArgumentException("타입오류");
+        }
     }
 
     @Transactional(readOnly = true)
