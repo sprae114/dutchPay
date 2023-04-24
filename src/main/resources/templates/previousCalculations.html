@@ -64,16 +64,44 @@
             <tr>
                 <th style="width: 150px;">날짜</th>
                 <th>내역</th>
+                <th>참가자</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="dutch : ${dutchResultList}">
-<!--                <td style="width: 100px;" th:text="${#dates.format(dutch.getCreatedAt(), 'yyyy-MM-dd')}">2023-01-02</td>-->
                 <td style="width: 100px;" th:text="${dutch.getCreatedAt()}">2023-01-02</td>
                 <td th:utext="${dutch.getResult()}">총 인원 5명이고, 계산 금액은 50,000원 입니다.</td>
+                <td th:utext="${dutch.getNames()}"> 김철, 홍길동</td>
             </tr>
             </tbody>
         </table>
+
+        <nav id="pagination" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link"
+                       th:text="'previous'"
+                       th:href="@{/previousCalculations(page=${dutchResultList.number - 1})}"
+                       th:class="'page-link' + (${dutchResultList.number} <= 0 ? ' disabled' : '')">Previous</a>
+                </li>
+
+                <li class="page-item" th:class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+                    <a class="page-link"
+                       th:text="${pageNumber + 1}"
+                       th:href="@{/previousCalculations(page=${pageNumber})}"
+                       th:class="'page-link' + (${pageNumber} == ${dutchResultList.number} ? ' disabled' : '')">1</a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link"
+                       th:text="'next'"
+                       th:href="@{/previousCalculations(page=${dutchResultList.number + 1})}"
+                       th:class="'page-link' + (${dutchResultList.number} >= ${dutchResultList.totalPages - 1} ? ' disabled' : '')">Next</a>
+                </li>
+
+            </ul>
+        </nav>
+
     </div>
     <hr class="my-4">
 
