@@ -26,6 +26,9 @@ public class DutchResult {
     @Getter
     public String names;
 
+    @Getter @Setter
+    public String createdAtString;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -52,10 +55,11 @@ public class DutchResult {
         this.result = result;
     }
 
-    public DutchResult(String result, UserAccount userAccount, String names) {
+    public DutchResult(String result, UserAccount userAccount, String names, String createdAtString) {
         this.result = result;
         this.userAccount = userAccount;
         this.names = names;
+        this.createdAtString = createdAtString;
     }
 
     static public DutchResult of(String result) {
