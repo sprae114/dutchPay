@@ -21,24 +21,19 @@ public class DutchResultService {
     }
 
     @Transactional(readOnly = true)
-    public Page<DutchResult> searchDutchResult(SearchType searchType, String searchKeyword, Pageable pageable){
+    public Page<DutchResult> searchDutchResult(Long id, SearchType searchType, String searchKeyword, Pageable pageable){
         if (searchKeyword == null || searchKeyword.isBlank()) {
-            return dutchResultRepository.findAll(pageable);
+            return dutchResultRepository.findAllByUserAccountId(id, pageable);
         }
 
         switch (searchType){
             case NAMES:
-                return dutchResultRepository.findByNamesContaining(searchKeyword, pageable);
-            case CREATED_AT:
-                return dutchResultRepository.findByCreatedAtContaining(searchKeyword, pageable);
+                return dutchResultRepository.findAllByUserAccountIdAndNamesContaining(id, searchKeyword, pageable);
+            case CREATED_AT_STRING:
+                return dutchResultRepository.findAllByUserAccountIdAndCreatedAtStringContaining(id, searchKeyword, pageable);
             default:
                 throw new IllegalArgumentException("타입오류");
         }
-    }
-
-    @Transactional(readOnly = true)
-    public Page<DutchResult> getDutchResult(LoginPrincipal loginPrincipal, Pageable pageable){
-        return dutchResultRepository.findAllByUserAccountId(loginPrincipal.getId(), pageable);
     }
 
     public void saveDutchResult(DutchResult dutchResult){

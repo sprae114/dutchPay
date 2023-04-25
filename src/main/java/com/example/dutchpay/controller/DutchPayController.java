@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
@@ -125,7 +126,9 @@ public class DutchPayController {
         UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId()).orElseThrow(() ->
                 new IllegalArgumentException("해당 사용자가 없습니다."));
 
-        dutchResultService.saveDutchResult(new DutchResult(recordDutch, userAccountDto.toEntity(), makeNames()));
+        DutchResult dutchResult = new DutchResult(recordDutch, userAccountDto.toEntity(), makeNames(), LocalDate.now().toString());
+
+        dutchResultService.saveDutchResult(dutchResult);
 
         return "redirect:/dutch";
     }

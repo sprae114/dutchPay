@@ -1,6 +1,7 @@
 package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
+import com.example.dutchpay.domain.type.SearchType;
 import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.service.DutchResultService;
 import com.example.dutchpay.service.PaginationService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -48,10 +50,17 @@ public class HomeController {
 
     @GetMapping("/previousCalculations")
     public String previousCalculations(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
+                                       @RequestParam(required = false) SearchType searchType,
+                                       @RequestParam(required = false) String searchValue,
                                        @PageableDefault(size = 4) Pageable pageable,
                                        Model model) {
 
-        Page<DutchResult> dutchResultList = dutchResultService.getDutchResult(loginPrincipal, pageable);
+        Page<DutchResult> dutchResultList = dutchResultService
+                .searchDutchResult(loginPrincipal.getId(),
+                                    searchType,
+                                    searchValue,
+                                    pageable);
+
         List<Integer> barNumbers = paginationService
                 .getPaginationBarNumbers(pageable.getPageNumber(), dutchResultList.getTotalPages());
 
