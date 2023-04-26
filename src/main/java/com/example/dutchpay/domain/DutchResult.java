@@ -13,7 +13,11 @@ import java.time.LocalDate;
 
 @ToString
 @Entity
-@Table
+@Table(indexes = {
+        @Index(name = "idx_user_account_id", columnList = "userAccount_id"),
+        @Index(name = "idx_user_account_id_names", columnList = "userAccount_id,names"),
+        @Index(name = "idx_user_account_id_created_at_string", columnList = "userAccount_id,createdAtString")
+})
 @EntityListeners(AuditingEntityListener.class)
 public class DutchResult {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
