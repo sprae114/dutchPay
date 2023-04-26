@@ -39,7 +39,7 @@ public class FriendController {
     public String friendList(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                              Model model) {
 
-        model.addAttribute("friendList", friendService.searchFriend(loginPrincipal));
+        model.addAttribute("friendList", friendService.searchFriend(loginPrincipal.getId()));
         model.addAttribute("newFriend", new FriendSaveDto());
 
         return "friend";
@@ -78,7 +78,7 @@ public class FriendController {
     public String dutchFriendSelect(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                     Model model) {
 
-        friendService.addFriendSelectListBefore(friendService.searchFriend(loginPrincipal));
+        friendService.addFriendSelectListBefore(friendService.searchFriend(loginPrincipal.getId()));
         model.addAttribute("friendList", friendSelectListBefore);
 
         return "friendSelect";

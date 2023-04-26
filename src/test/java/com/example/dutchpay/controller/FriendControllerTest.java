@@ -62,7 +62,7 @@ class FriendControllerTest {
     @WithMockUser
     public void friendListTest() throws Exception {
         ArrayList<Friend> friends = new ArrayList<>();
-        when(friendService.searchFriend(any(LoginPrincipal.class))).thenReturn(friends);
+        when(friendService.searchFriend(any(Long.class))).thenReturn(friends);
 
         mockMvc.perform(get("/friend"))
                 .andExpect(status().isOk())
@@ -169,7 +169,7 @@ class FriendControllerTest {
     @WithMockUser
     public void dutchFriendSelectTest() throws Exception {
         // given
-        given(friendService.searchFriend(any(LoginPrincipal.class))).willReturn(new ArrayList<>());
+        given(friendService.searchFriend(any(Long.class))).willReturn(new ArrayList<>());
         willDoNothing().given(friendService).addFriendSelectListBefore(any(List.class));
 
         // when

@@ -34,11 +34,7 @@ public class FriendService {
     }
 
     public List<Friend> searchFriend(Long id) {
-        return friendRepository.findAllByUserAccountId(id);
-    }
-
-    public List<Friend> searchFriend(LoginPrincipal loginPrincipal) {
-        return friendRepository.findAllByUserAccountId(loginPrincipal.getId());
+        return friendRepository.findAllByAccountIdWithFetchJoin(id);
     }
 
     public void deleteFriend(Long id) {
