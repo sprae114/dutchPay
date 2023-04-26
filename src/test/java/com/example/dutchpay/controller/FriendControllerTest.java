@@ -59,7 +59,7 @@ class FriendControllerTest {
 
     @DisplayName("친구 목록 페이지 테스트")
     @Test
-    @WithMockUser
+    @WithUserDetails(value = "1111", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void friendListTest() throws Exception {
         ArrayList<Friend> friends = new ArrayList<>();
         when(friendService.searchFriend(any(Long.class))).thenReturn(friends);
@@ -166,7 +166,7 @@ class FriendControllerTest {
 
     @DisplayName("친구 선택 전 테스트 - 성공")
     @Test
-    @WithMockUser
+    @WithUserDetails(value = "1111", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void dutchFriendSelectTest() throws Exception {
         // given
         given(friendService.searchFriend(any(Long.class))).willReturn(new ArrayList<>());
