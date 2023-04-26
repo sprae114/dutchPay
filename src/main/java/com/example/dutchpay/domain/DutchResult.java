@@ -59,6 +59,12 @@ public class DutchResult {
         this.result = result;
     }
 
+    public DutchResult(String result, UserAccount userAccount, String names) {
+        this.result = result;
+        this.userAccount = userAccount;
+        this.names = names;
+    }
+
     public DutchResult(String result, UserAccount userAccount, String names, String createdAtString) {
         this.result = result;
         this.userAccount = userAccount;

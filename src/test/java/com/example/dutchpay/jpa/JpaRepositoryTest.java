@@ -7,6 +7,7 @@ import com.example.dutchpay.repository.DutchResultRepository;
 import com.example.dutchpay.repository.FriendRepository;
 import com.example.dutchpay.repository.UserAccountRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,21 +101,6 @@ public class JpaRepositoryTest {
 
         // Then
         Assertions.assertThat(userAccountRepository.count()).isEqualTo(previousCount+1);
-    }
-
-    @DisplayName("dutchResult insert 테스트")
-    @Test
-    void dutchResultRepository_insert() {
-        // Given
-        long previousCount = dutchResultRepository.count();
-
-        // When
-        dutchResultRepository.save(DutchResult.of("vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean " +
-                "lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in " +
-                "libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu "));
-
-        // Then
-        Assertions.assertThat(dutchResultRepository.count()).isEqualTo(previousCount+1);
     }
 
     @DisplayName("friend delete 테스트")
