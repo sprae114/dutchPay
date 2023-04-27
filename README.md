@@ -16,9 +16,9 @@
 1. **기록 및 계산의 번거로움**: 수기로 기록하거나 복잡한 계산을 피하기 위해, 사용자들이 손쉽게 내역을 입력하고 더치페이 금액을 계산할 수 있도록 합니다.
 2. **복잡한 상황에 대한 문제해결** : n차 이후에 친구가 집에 간 상황, 술을 먹지 않는 친구가 있어서 술값을 따로 계산하는 상황, 금액을 한사람이 아닌 여러 사람이 낸 상황 등... 에서도 입력만 하면 간단하게 계산할 수 있도록 합니다.
 3. **최소이체 알고리즘** : 기존에 더치페이 앱을 보면 n을 나눠서 끝나는 경우가 대부분이라서 복잡한 상황을 해결할 수가 없습니다. 또한, 복잡한 상황을 해결한다고 해도 여러번 이체하는 경우가 있었습니다. 이 프로젝트에서는 최소이체 알고리즘을 통해서 최소 이체로 송금할 수 있도록 했습니다.
-   
-[최소이체 알고리즘 정산 에세이 정리](https://github.com/sprae114/dutchPay/blob/master/정산에세이.md)
-
+   ([최소이체 알고리즘 정산 에세이 정리](https://github.com/sprae114/dutchPay/blob/master/정산에세이.md))
+4. **성능 최적화** : 기존 SpringDataJPA가 작성해준 쿼리를 그대로 사용하면 성능이 떨어지는 경우가 있었습니다. 이 프로젝트에서는 성능 최적화를 위해 쿼리를 직접 작성하며, 성능최적화를 시켰습니다.
+   ([find_성능_최적화_대해서](https://github.com/sprae114/dutchPay/blob/master/find_성능_최적화_대해서.md),  [검색_최적화에_대해서](https://github.com/sprae114/dutchPay/blob/master/검색_최적화에_대해서.md))
 -----
 # 📌기능 및 기술스택
 
@@ -37,6 +37,17 @@
 
 ![최소이체 알고리즘](https://user-images.githubusercontent.com/52237184/233601930-fb9df455-41ea-4744-be6a-bc9c59605a03.gif)
 
+4) 검색 기능을 통한 정산 내역 조회
+
+![정산 내역 조회 및 검색](https://user-images.githubusercontent.com/52237184/234852366-5da12dbb-f064-47d4-bfcf-d3ea8460f584.gif)
+
 
 ## 기술 스택 및 라이브러리
-![기술스택](https://user-images.githubusercontent.com/52237184/233601936-a3244566-27cd-4177-be14-5f0e7fad5148.png)
+1) 개발환경
+- Java 17
+- Gradle 7.4.1
+- Spring Boot 2.7.0
+
+---
+2) 기술 스택
+![image](https://user-images.githubusercontent.com/52237184/234813089-1757ddde-b50f-4e0e-9025-2d1c33ab6ef8.png)
