@@ -19,10 +19,20 @@
    ([최소이체 알고리즘 정산 에세이 정리](https://github.com/sprae114/dutchPay/blob/master/정산에세이.md))
 4. **성능 최적화** : 기존 SpringDataJPA가 작성해준 쿼리를 그대로 사용하면 성능이 떨어지는 경우가 있었습니다. 이 프로젝트에서는 성능 최적화를 위해 쿼리를 직접 작성하며, 성능최적화를 시켰습니다.
    ([find_성능_최적화_대해서](https://github.com/sprae114/dutchPay/blob/master/find_성능_최적화_대해서.md),  [검색_최적화에_대해서](https://github.com/sprae114/dutchPay/blob/master/검색_최적화에_대해서.md))
------
-# 📌기능 및 기술스택
+   
 
-## 프로젝트 주요 기능
+## 기술 스택 및 라이브러리
+### 1) 개발환경
+- Java 17
+- Gradle 7.4.1
+- Spring Boot 2.7.0
+
+---
+### 2) 기술 스택
+![image](https://user-images.githubusercontent.com/52237184/234813089-1757ddde-b50f-4e0e-9025-2d1c33ab6ef8.png)
+
+
+# 📌 프로젝트 주요 기능
 ### 1) 카카오 API를 이용한 로그인 기능
 - 사용자들은 카카오 계정을 통해 간편하게 웹사이트에 로그인할 수 있으며, 이를 통해 사용자 경험을 개선하고 회원 가입 및 로그인 과정을 단순화할 수 있습니다.
 
@@ -40,17 +50,7 @@
 
 ![최소이체 알고리즘](https://user-images.githubusercontent.com/52237184/233601930-fb9df455-41ea-4744-be6a-bc9c59605a03.gif)
 
-4) 검색 기능을 통한 정산 내역 조회
+### 4) 검색 기능을 통한 정산 내역 조회
+- 기존에 정산 조회뿐만 아니라 검색을 이용해서 해당 정산을 쉽게 찾을 수 있도록 하였습니다. 또한 JPQL 쿼리와 인덱스를 활용해 검색 기능을 구현 한 결과 기존의 비해 70%이상의 성능 향상을 시켰습니다.
 
 ![정산 내역 조회 및 검색](https://user-images.githubusercontent.com/52237184/234852366-5da12dbb-f064-47d4-bfcf-d3ea8460f584.gif)
-
-
-## 기술 스택 및 라이브러리
-1) 개발환경
-- Java 17
-- Gradle 7.4.1
-- Spring Boot 2.7.0
-
----
-2) 기술 스택
-![image](https://user-images.githubusercontent.com/52237184/234813089-1757ddde-b50f-4e0e-9025-2d1c33ab6ef8.png)
