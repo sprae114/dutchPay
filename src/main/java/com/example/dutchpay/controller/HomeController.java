@@ -2,6 +2,7 @@ package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.type.SearchType;
+import com.example.dutchpay.dto.DutchResultDTO;
 import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.service.DutchResultService;
 import com.example.dutchpay.service.PaginationService;
@@ -55,7 +56,7 @@ public class HomeController {
                                        @PageableDefault(size = 4) Pageable pageable,
                                        Model model) {
 
-        Page<DutchResult> dutchResultList = dutchResultService
+        Page<DutchResultDTO> dutchResultList = dutchResultService
                 .searchDutchResult(loginPrincipal.getId(),
                                     searchType,
                                     searchValue,

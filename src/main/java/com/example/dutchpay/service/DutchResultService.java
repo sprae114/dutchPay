@@ -2,6 +2,7 @@ package com.example.dutchpay.service;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.type.SearchType;
+import com.example.dutchpay.dto.DutchResultDTO;
 import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.repository.DutchResultRepository;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public class DutchResultService {
     }
 
     @Transactional(readOnly = true)
-    public Page<DutchResult> searchDutchResult(Long id, SearchType searchType, String searchKeyword, Pageable pageable){
+    public Page<DutchResultDTO> searchDutchResult(Long id, SearchType searchType, String searchKeyword, Pageable pageable){
         if (searchKeyword == null || searchKeyword.isBlank()) {
             return dutchResultRepository.findAllByUserAccountId(id, pageable);
         }

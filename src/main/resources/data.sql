@@ -99,7 +99,7 @@ insert into user_account (user_account_id, name, email) values (97, 'Moritz', 'm
 insert into user_account (user_account_id, name, email) values (98, 'Zackariah', 'zpallas2p@hatena.ne.jp');
 insert into user_account (user_account_id, name, email) values (99, 'Cort', 'ccullotey2q@delicious.com');
 insert into user_account (user_account_id, name, email) values (100, 'Blakelee', 'blewcock2r@symantec.com');
-
+insert into user_account (user_account_id, name, email) values (2729636089, '강요한', 'cullotey2q@delicious.com');
 
 --friend
 insert into friend (name, phone_num, user_account_id) values ('Felicio', '280-977-4704', 42);
@@ -1606,3 +1606,9 @@ insert into dutch_result (user_account_id, result, created_at) values (1, 'Sutur
 insert into dutch_result (user_account_id, result, created_at) values (56, 'Repair of brain', '2022-04-12');
 insert into dutch_result (user_account_id, result, created_at) values (72, 'Other incision of bone without division, scapula, clavicle, and thorax [ribs and sternum]', '2022-05-18');
 insert into dutch_result (user_account_id, result, created_at) values (80, 'Dilation of fallopian tube', '2021-04-04');
+insert into dutch_result (user_account_id, result, created_at, created_at_string, names) values (2729636089, '총 계산 금액은 80,000원 입니다.<br>홍길동 -> 김영희에게 보낼 금액은 : 20,000원 입니다.<br>김철수 -> 김영희에게 보낼 금액은 : 10,000원 입니다.<br>김철수 -> 강호동에게 보낼 금액은 : 10,000원 입니다.<br>', '2023-04-25', '2023-04-25', '김영희,홍길동,김철수,강호동');
+insert into dutch_result (user_account_id, result, created_at, created_at_string, names) values (2729636089, '총 계산 금액은 31,000원 입니다.<br>김영희 -> 홍길동에게 보낼 금액은 : 10,300원 입니다.<br>김철수 -> 홍길동에게 보낼 금액은 : 9,300원 입니다.<br>', '2023-04-27', '2023-04-27', '홍길동,김철수,김영희');
+insert into dutch_result (user_account_id, result, created_at, created_at_string, names) values (2729636089, '총 계산 금액은 23,000원 입니다.<br>김철수 -> 홍길동에게 보낼 금액은 : 11,500원 입니다.<br>', '2023-02-20', '2023-02-20', '홍길동,김철수');
+insert into dutch_result (user_account_id, result, created_at, created_at_string, names) values (2729636089, '총 계산 금액은 23,000원 입니다.<br>김철수 -> 홍길동에게 보낼 금액은 : 11,500원 입니다.<br>', '2023-04-01', '2023-04-01', '홍길동,김철수');
+insert into dutch_result (user_account_id, result, created_at, created_at_string, names) values (2729636089, '총 계산 금액은 130,000원 입니다.<br>김영희 -> 김철수에게 보낼 금액은 : 32,500원 입니다.<br>강호동 -> 김철수에게 보낼 금액은 : 32,500원 입니다.<br>홍길동 -> 김철수에게 보낼 금액은 : 22,500원 입니다.<br>', '2023-03-21', '2023-03-21', '홍길동,김철수,김영희,강호동');
+insert into dutch_result (user_account_id, result, created_at, created_at_string, names) values (2729636089, '총 계산 금액은 130,000원 입니다.<br>김영희 -> 김철수에게 보낼 금액은 : 32,500원 입니다.<br>강호동 -> 김철수에게 보낼 금액은 : 32,500원 입니다.<br>홍길동 -> 김철수에게 보낼 금액은 : 22,500원 입니다.<br>', '2023-04-10', '2023-04-10', '홍길동,김철수,김영희,강호동');
