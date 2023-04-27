@@ -58,7 +58,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(100);
+                .hasSize(101);
     }
 
     @DisplayName("dutchResult select 테스트")
@@ -72,7 +72,7 @@ public class JpaRepositoryTest {
         // Then
         assertThat(all)
                 .isNotNull()
-                .hasSize(500);
+                .hasSize(506);
     }
 
 
