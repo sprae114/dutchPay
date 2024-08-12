@@ -21,15 +21,15 @@ public interface DutchResultRepository extends
         QuerydslPredicateExecutor<DutchResult>,
         QuerydslBinderCustomizer<QDutchResult> {
     @Query("select new com.example.dutchpay.dto.DutchResultDTO(d.createdAtString, d.names, d.result) " +
-            "from DutchResult d where d.userAccount.id = :userAccountId")
+            "from DutchResult d where d.userAccount.id = ?1")
     Page<DutchResultDTO> findAllByUserAccountId(Long userAccountId, Pageable pageable);
 
     @Query("select new com.example.dutchpay.dto.DutchResultDTO(d.createdAtString, d.names, d.result) " +
-            "from DutchResult d where d.userAccount.id = :userAccountId and d.names like %:names%")
+            "from DutchResult d where d.userAccount.id = ?1 and d.names like %?2%")
     Page<DutchResultDTO> findAllByUserAccountIdAndNamesContaining(Long userAccountId, String names, Pageable pageable);
 
     @Query("select new com.example.dutchpay.dto.DutchResultDTO(d.createdAtString, d.names, d.result) " +
-            "from DutchResult d where d.userAccount.id = :userAccountId and d.createdAtString like %:createdAtString%")
+            "from DutchResult d where d.userAccount.id = ?1 and d.createdAtString like %?2%")
     Page<DutchResultDTO> findAllByUserAccountIdAndCreatedAtStringContaining(Long userAccountId, String createdAtString, Pageable pageable);
 
     @Override

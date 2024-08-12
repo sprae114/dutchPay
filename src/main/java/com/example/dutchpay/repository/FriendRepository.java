@@ -12,9 +12,9 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
     List<Friend> findAllByUserAccountId(Long userAccountId);
 
-    @Query("select f from Friend f where f.userAccount.id = :accountId")
+    @Query("select f from Friend f where f.userAccount.id = ?1")
     List<Friend> findAllByAccountIdQueryOptimization(Long accountId);
 
-    @Query("SELECT f FROM Friend f JOIN FETCH f.userAccount WHERE f.userAccount.id = :accountId")
+    @Query("SELECT f FROM Friend f JOIN FETCH f.userAccount WHERE f.userAccount.id = ?1")
     List<Friend> findAllByAccountIdWithFetchJoin(Long accountId);
 }

@@ -1,10 +1,11 @@
-package com.example.dutchpay.exception;
+package com.example.dutchpay.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 @Slf4j
 @ControllerAdvice
