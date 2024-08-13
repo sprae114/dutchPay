@@ -3,6 +3,7 @@ package com.example.dutchpay.service;
 import com.example.dutchpay.domain.Friend;
 import com.example.dutchpay.domain.UserAccount;
 import com.example.dutchpay.dto.FriendSelectSaveDto;
+import com.example.dutchpay.exception.UserNotFoundException;
 import com.example.dutchpay.repository.FriendRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -55,7 +56,7 @@ public class FriendServiceTest {
         Friend friend = null;
 
         // When
-        assertThrows(NullPointerException.class, () -> friendService.addFriend(friend));
+        assertThrows(UserNotFoundException.class, () -> friendService.addFriend(friend));
 
         // Then
         verify(friendRepository, times(0)).save(any(Friend.class));

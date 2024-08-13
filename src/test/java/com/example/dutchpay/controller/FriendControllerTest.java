@@ -218,7 +218,7 @@ class FriendControllerTest {
         mockMvc.perform(post("/dutch/friend")
                         .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("error/error"));
+                .andExpect(view().name("error/4xx"));
 
         // then
         verify(friendService, times(0)).addFriendSelectListAfter(any(List.class));
