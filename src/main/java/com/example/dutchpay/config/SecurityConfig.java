@@ -2,6 +2,8 @@ package com.example.dutchpay.config;
 
 import com.example.dutchpay.dto.KakaoOAuth2Response;
 import com.example.dutchpay.dto.LoginPrincipal;
+import com.example.dutchpay.exception.CodeError;
+import com.example.dutchpay.exception.UserNotFoundException;
 import com.example.dutchpay.service.UserAccountService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +55,7 @@ public class SecurityConfig {
         return id -> userAccountService
                 .searchUser(Long.valueOf(id))
                 .map(LoginPrincipal::from)
-                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다 - id: " + id));
+                .orElseThrow(() -> new UserNotFoundException(CodeError.NOT_FOUND_USER, id));
     }
 
 

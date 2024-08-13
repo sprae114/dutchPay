@@ -4,6 +4,8 @@ import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.domain.type.SearchType;
 import com.example.dutchpay.dto.DutchResultDTO;
 import com.example.dutchpay.dto.LoginPrincipal;
+import com.example.dutchpay.exception.CodeError;
+import com.example.dutchpay.exception.TypeMismatchException;
 import com.example.dutchpay.repository.DutchResultRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +35,7 @@ public class DutchResultService {
             case CREATED_AT_STRING:
                 return dutchResultRepository.findAllByUserAccountIdAndCreatedAtStringContaining(id, searchKeyword, pageable);
             default:
-                throw new IllegalArgumentException("타입오류");
+                throw new TypeMismatchException(CodeError.TYPE_MISMATCH);
         }
     }
 

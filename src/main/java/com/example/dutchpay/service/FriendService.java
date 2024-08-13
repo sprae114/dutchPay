@@ -3,6 +3,8 @@ package com.example.dutchpay.service;
 import com.example.dutchpay.domain.Friend;
 import com.example.dutchpay.dto.FriendSelectSaveDto;
 import com.example.dutchpay.dto.LoginPrincipal;
+import com.example.dutchpay.exception.CodeError;
+import com.example.dutchpay.exception.UserNotFoundException;
 import com.example.dutchpay.repository.FriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class FriendService {
 
     public void addFriend(Friend friend) {
         if (friend == null) {
-            throw new NullPointerException("친구가 존재하지 않습니다.");
+            throw new UserNotFoundException(CodeError.NOT_FOUND_FRIEND);
         }
 
         friendRepository.save(friend);

@@ -2,6 +2,8 @@ package com.example.dutchpay.controller;
 
 import com.example.dutchpay.domain.DutchResult;
 import com.example.dutchpay.dto.*;
+import com.example.dutchpay.exception.CodeError;
+import com.example.dutchpay.exception.UserNotFoundException;
 import com.example.dutchpay.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -123,8 +125,8 @@ public class DutchPayController {
     @PostMapping("/recordDutchResult")
     public String recordDutchResult(@AuthenticationPrincipal LoginPrincipal loginPrincipal,
                                     @RequestParam String recordDutch) {
-        UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId()).orElseThrow(() ->
-                new IllegalArgumentException("해당 사용자가 없습니다."));
+        UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal.getId())
+                .orElseThrow(() -> new UserNotFoundException(CodeError.NOT_FOUND_USER, loginPrincipal.getId().toString()));
 
         DutchResult dutchResult = new DutchResult(recordDutch, userAccountDto.toEntity(), makeNames(), LocalDate.now().toString());
 

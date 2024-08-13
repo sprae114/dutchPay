@@ -3,6 +3,8 @@ package com.example.dutchpay.controller;
 import com.example.dutchpay.dto.FriendSaveDto;
 import com.example.dutchpay.dto.LoginPrincipal;
 import com.example.dutchpay.dto.UserAccountDto;
+import com.example.dutchpay.exception.CodeError;
+import com.example.dutchpay.exception.UserNotFoundException;
 import com.example.dutchpay.service.DutchPayService;
 import com.example.dutchpay.service.FriendService;
 import com.example.dutchpay.service.UserAccountService;
@@ -52,7 +54,7 @@ public class FriendController {
 
 
         UserAccountDto userAccountDto = userAccountService.searchUser(loginPrincipal).orElseThrow(
-                () -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + loginPrincipal)
+                () -> new UserNotFoundException(CodeError.NOT_FOUND_USER, loginPrincipal.getId().toString())
         );
 
         //검증에 실패하면 다시 입력 폼으로
