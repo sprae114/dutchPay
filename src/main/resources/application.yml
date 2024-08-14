@@ -15,11 +15,13 @@ spring:
 
   jpa:
     defer-datasource-initialization: true
-    hibernate.ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
-      hibernate.default_batch_fetch_size: 100
+    hibernate:
+      ddl-auto: create-drop
+      show-sql: true
+      properties:
+        hibernate.format_sql: true
+        hibernate.default_batch_fetch_size: 100
+
   h2:
     console:
       enabled: true
@@ -28,9 +30,11 @@ spring:
     init:
       mode: always
 
-  data.rest:
-    base-path: /api
-    detection-strategy: annotated
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
+
   security:
     oauth2:
       client:
@@ -55,5 +59,11 @@ spring:
   config.activate.on-profile: heroku
   datasource:
     url: ${CLEARDB_DATABASE_URL}
-  jpa.hibernate.ddl-auto: create
-  sql.init.mode: always
+    username: ${CLEARDB_DATABASE_USERNAME}
+    password: ${CLEARDB_DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+  sql:
+    init:
+      mode: always
