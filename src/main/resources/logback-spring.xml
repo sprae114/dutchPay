@@ -1,0 +1,27 @@
+<configuration>
+    <!-- 콘솔에 로그 출력 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 로그의 출력 형식 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 파일로 로그를 출력하는 appender -->    <appender name="ERROR_FILE" class="ch.qos.logback.core.FileAppender">
+    <file>${LOG_FILE:-logs/error.log}</file> <!-- 로그 파일의 경로 -->
+    <encoder>
+        <!-- 로그의 출력 형식 -->
+        <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+    </encoder>
+</appender>
+
+    <!-- Info 레벨 이상의 로그를 콘솔에 출력-->
+    <root level="Info">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- ERROR 레벨 이상의 로그를 파일에만 저장 -->
+    <logger name="com.example" level="ERROR" additivity="false">
+        <appender-ref ref="ERROR_FILE" />
+    </logger>
+</configuration>
